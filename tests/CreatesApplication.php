@@ -1,22 +1,14 @@
 <?php
 
-namespace Tests;
+require __DIR__.'/vendor/autoload.php';
 
-use Illuminate\Contracts\Console\Kernel;
+$client = new GuzzleHttp\Client([
+    'verify' => 'C:\laragon\etc\ssl\cacert.pem',
+]);
 
-trait CreatesApplication
-{
-    /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
-    public function createApplication()
-    {
-        $app = require __DIR__.'/../bootstrap/app.php';
-
-        $app->make(Kernel::class)->bootstrap();
-
-        return $app;
-    }
+try {
+    $response = $client->get('https://oauth2.googleapis.com/token');
+    echo "Status: ".$response->getStatusCode();
+} catch (\Exception $e) {
+    echo $e->getMessage();
 }

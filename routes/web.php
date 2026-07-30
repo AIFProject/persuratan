@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SuratMasukController;
-use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\DisposisiController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,4 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('surat-keluar', SuratKeluarController::class);
     Route::get('surat-keluar/{surat_keluar}/download', [SuratKeluarController::class, 'download'])->name('surat-keluar.download');
     Route::resource('disposisi', DisposisiController::class);
+    Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip.index');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/surat-masuk', [LaporanController::class, 'cetakSuratMasuk'])->name('laporan.surat-masuk');
+    Route::get('/laporan/surat-keluar', [LaporanController::class, 'cetakSuratKeluar'])->name('laporan.surat-keluar');
 });

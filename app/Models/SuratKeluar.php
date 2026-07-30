@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class SuratKeluar extends Model
 {
     use HasFactory;
+
     protected $table = 'surat_keluar';
+
     protected $fillable = [
-        'nomor_surat', 'tanggal_surat', 'tujuan',
-        'perihal', 'file_surat', 'keterangan'
+        'nomor_surat', 'tanggal_surat', 'tujuan', 'perihal',
+        'sifat_surat', 'file_surat', 'keterangan',
     ];
+
     protected $casts = [
         'tanggal_surat' => 'date',
     ];
-
-    public function disposisi() {
-        return $this->hasMany(Disposisi::class);
-    }
 }

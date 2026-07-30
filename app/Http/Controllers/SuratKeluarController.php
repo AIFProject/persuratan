@@ -12,14 +12,17 @@ class SuratKeluarController extends Controller
     public function index(Request $request)
     {
         $query = SuratKeluar::latest();
+
         if ($request->filled('search')) {
             $search = $request->search;
+
             $query->where(function ($q) use ($search) {
                 $q->where('nomor_surat', 'like', "%{$search}%")
                     ->orWhere('tujuan', 'like', "%{$search}%")
                     ->orWhere('perihal', 'like', "%{$search}%");
             });
         }
+
         $suratKeluar = $query->paginate(10)->withQueryString();
 
         return view('surat_keluar.index', compact('suratKeluar'));
@@ -32,13 +35,31 @@ class SuratKeluarController extends Controller
 
     public function store(SuratKeluarRequest $request)
     {
-        $data = $request->validated();
-        if ($request->hasFile('file_surat')) {
-            $data['file_surat'] = $request->file('file_surat')->store('surat_keluar', 'public');
-        }
-        SuratKeluar::create($data);
+        try {
 
-        return redirect()->route('surat-keluar.index')->with('success', 'Surat keluar berhasil ditambahkan.');
+            $data = $request->validated();
+
+            if ($request->hasFile('file_surat')) {
+
+                $data['file_surat'] = $request
+                    ->file('file_surat')
+                    ->store('surat_keluar', 'public');
+
+            }
+
+            SuratKeluar::create($data);
+
+            return redirect()
+                ->route('surat-keluar.index')
+                ->with('success', 'Surat keluar berhasil ditambahkan.');
+
+        } catch (\Exception $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan surat keluar. '.$e->getMessage());
+
+        }
     }
 
     public function show(SuratKeluar $suratKeluar)
@@ -46,41 +67,83 @@ class SuratKeluarController extends Controller
         return view('surat_keluar.show', compact('suratKeluar'));
     }
 
-    public function edit($id)
+    public function edit(SuratKeluar $suratKeluar)
     {
-        return view('surat_keluar.edit', compact('suratkeluar'));
+        return view('surat_keluar.edit', compact('suratKeluar'));
     }
 
     public function update(SuratKeluarRequest $request, SuratKeluar $suratKeluar)
     {
-        $data = $request->validated();
-        if ($request->hasFile('file_surat')) {
-            if ($suratKeluar->file_surat) {
-                Storage::disk('public')->delete($suratKeluar->file_surat);
-            }
-            $data['file_surat'] = $request->file('file_surat')->store('surat_keluar', 'public');
-        }
-        $suratKeluar->update($data);
+        try {
 
-        return redirect()->route('surat-keluar.index')->with('success', 'Surat keluar berhasil diperbarui.');
+            $data = $request->validated();
+
+            if ($request->hasFile('file_surat')) {
+
+                if ($suratKeluar->file_surat) {
+
+                    Storage::disk('public')
+                        ->delete($suratKeluar->file_surat);
+
+                }
+
+                $data['file_surat'] = $request
+                    ->file('file_surat')
+                    ->store('surat_keluar', 'public');
+
+            }
+
+            $suratKeluar->update($data);
+
+            return redirect()
+                ->route('surat-keluar.index')
+                ->with('success', 'Surat keluar berhasil diperbarui.');
+
+        } catch (\Exception $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', 'Gagal memperbarui surat keluar: '.$e->getMessage());
+
+        }
     }
 
     public function destroy(SuratKeluar $suratKeluar)
     {
-        if ($suratKeluar->file_surat) {
-            Storage::disk('public')->delete($suratKeluar->file_surat);
-        }
-        $suratKeluar->delete();
+        try {
 
-        return redirect()->route('surat-keluar.index')->with('success', 'Surat keluar berhasil dihapus.');
+            if ($suratKeluar->file_surat) {
+
+                Storage::disk('public')
+                    ->delete($suratKeluar->file_surat);
+
+            }
+
+            $suratKeluar->delete();
+
+            return redirect()
+                ->route('surat-keluar.index')
+                ->with('success', 'Surat keluar berhasil dihapus.');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->route('surat-keluar.index')
+                ->with('error', 'Gagal menghapus surat keluar: '.$e->getMessage());
+
+        }
     }
 
     public function download(SuratKeluar $suratKeluar)
     {
-        if (! $suratKeluar->file_surat || ! Storage::disk('public')->exists($suratKeluar->file_surat)) {
-            return back()->with('error', 'File tidak ditemukan.');
+        if (! $suratKeluar->file_surat) {
+
+            return back()
+                ->with('error', 'File tidak ditemukan.');
+
         }
 
-        return Storage::disk('public')->download($suratKeluar->file_surat);
+        return Storage::disk('public')
+            ->download($suratKeluar->file_surat);
     }
 }

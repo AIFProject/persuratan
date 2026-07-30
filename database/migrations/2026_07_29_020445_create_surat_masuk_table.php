@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('klasifikasi');
             $table->string('file_surat')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('file_drive_id')->nullable();
+            $table->string('file_name')->nullable();
             $table->timestamps();
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('surat_masuk');
     }
 };

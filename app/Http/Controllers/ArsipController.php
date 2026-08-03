@@ -65,9 +65,12 @@ class ArsipController extends Controller
             });
 
         // Union dan paginate
-        $results = $keluar->unionAll($masuk)
-            ->orderBy('tanggal', 'desc')
-            ->paginate(20)
+        $union = $keluar->unionAll($masuk);
+
+        $results = DB::query()
+            ->fromSub($union, 'arsip')
+            ->orderByDesc('tanggal')
+            ->paginate(10)
             ->withQueryString();
 
         return view('arsip.index', compact('results', 'filters'));

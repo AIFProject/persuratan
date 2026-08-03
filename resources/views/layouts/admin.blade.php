@@ -10,23 +10,65 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.13.1/bootstrap-icons.min.css">
     <!-- Google Font -->
+    <link rel="icon" type="image/png" href="{{ asset('logo-mtsn.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --success: #10b981;
+
+            /* =============== PRIMARY =============== */
+
+            --primary: #1bde1b;
+            --primary-dark: #16c216;
+            --primary-light: #49eb49;
+            --primary-soft: #d8fbd8;
+
+            /* =============== SIDEBAR =============== */
+
+            --sidebar: #0f2613;
+            --sidebar-second: #16361b;
+            --sidebar-hover: rgba(27, 222, 27, .12);
+
+            /* =============== BACKGROUND =============== */
+
+            --background: #f5fff5;
+            --surface: #ffffff;
+
+            /* =============== TEXT =============== */
+
+            --text: #1b2a1b;
+            --muted: #5d7460;
+
+            /* =============== BORDER =============== */
+
+            --border: #dcefdc;
+
+            /* =============== STATUS =============== */
+
+            --success: #1bde1b;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --sidebar: #0f172a;
-            --sidebar-hover: #1e293b;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-            --muted: #64748b;
-            --border: #e2e8f0;
+
+            /* =============== SIZE =============== */
+
+            --sidebar-width: 280px;
+            --sidebar-collapse: 88px;
+            --topbar-height: 78px;
+
+            --radius: 18px;
+
+            /* =============== SHADOW =============== */
+
+            --shadow-sm: 0 5px 15px rgba(27, 222, 27, .08);
+            --shadow: 0 10px 35px rgba(27, 222, 27, .10);
+            --shadow-lg: 0 20px 50px rgba(27, 222, 27, .16);
+
+            --transition: .3s cubic-bezier(.4, 0, .2, 1);
+
         }
 
         * {
@@ -35,94 +77,367 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
+            background: var(--background);
             color: var(--text);
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         a {
             text-decoration: none;
         }
 
-        /* ===========================
-                SIDEBAR
-        =========================== */
-        .sidebar {
-            width: 260px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background: var(--sidebar);
-            display: flex;
-            flex-direction: column;
-            z-index: 999;
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
 
+        /* =====================================================
+                    SIDEBAR
+===================================================== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background:
+                linear-gradient(180deg,
+                    #1bde1b 0%,
+                    #149614 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow:
+                18px 0 45px rgba(15, 23, 42, .12);
+        }
+
+        /* ================= BRAND ================= */
         .brand {
             padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
             border-bottom: 1px solid rgba(255, 255, 255, .08);
         }
 
+        .brand-logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .18);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
         .brand small {
-            color: #94a3b8;
-            font-size: 12px;
-            letter-spacing: 2px;
+            display: block;
+            color: #fff;
+            letter-spacing: 1px;
+            font-size: 11px;
             text-transform: uppercase;
         }
 
         .brand h4 {
-            margin-top: 6px;
-            color: white;
-            font-weight: 700;
+            margin-top: 4px;
+            margin-bottom: 0;
             font-size: 20px;
+            font-weight: 700;
+            color: #fff;
         }
 
+        /* ================= MENU ================= */
         .menu {
             flex: 1;
-            padding: 18px;
+            overflow-y: auto;
+            padding: 24px 18px;
+        }
+
+        .menu::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .10);
+            border-radius: 50px;
         }
 
         .menu-title {
-            color: #64748b;
-            font-size: 12px;
+            color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
-            padding-left: 12px;
+            font-size: 11px;
+            padding-left: 16px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+                    MENU ITEM
+===================================================== */
+        .sidebar .nav {
+            display flex;
+            flex-dirction: column;
+            gap: 8px;
+        }
+
+        .sidebar .nav-item {
+            width: 100%;
         }
 
         .sidebar .nav-link {
-            color: #cbd5e1;
-            border-radius: 12px;
-            padding: 13px 16px;
-            margin-bottom: 8px;
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: .25s;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            color: #cbd5e1;
+            font-size: 15px;
             font-weight: 500;
+            transition: var(--transition);
+            overflow: hidden;
         }
 
-        .sidebar .nav-link i {
-            font-size: 18px;
-            width: 22px;
+        /* icon */
+        .sidebar .nav-link .material-symbols-outlined {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .06);
+            font-size: 22px;
+            transition: var(--transition);
+            flex-shrink: 0;
         }
 
+        /* text */
+        .sidebar .nav-link p {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        /* hover */
         .sidebar .nav-link:hover {
-            background: var(--sidebar-hover);
             color: #fff;
-            transform: translateX(4px);
+            background: rgba(255, 255, 255, .07);
+            transform: translateX(6px);
         }
 
+        .sidebar .nav-link:hover .material-symbols-outlined {
+            background: rgba(255, 255, 255, .12);
+        }
+
+        /* active */
         .sidebar .nav-link.active {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, .25);
+            background: #ffffff;
+            color: #149614;
+            box-shadow:
+                0 12px 30px rgba(27, 222, 27, .25);
         }
 
+        .sidebar .nav-link.active .material-symbols-outlined {
+            background: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        /* left indicator */
+        .sidebar .nav-link.active::before {
+            content: "";
+            position: absolute;
+            left: -2px;
+            top: 10px;
+            width: 5px;
+            height: 34px;
+            border-radius: 20px;
+            background: var(--primary);
+        }
+
+        /* badge */
+        .menu-badge {
+            margin-left: auto;
+            background: rgba(255, 255, 255, .10);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+                COLLAPSED SIDEBAR
+===================================================== */
+        .sidebar.collapsed {
+            width: 88px;
+        }
+
+        .sidebar.collapsed .brand {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+
+            padding: 18px 0;
+        }
+
+        .sidebar.collapsed .brand-text {
+            display: none;
+        }
+
+        .sidebar.collapsed .menu-title {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .sidebar.collapsed .nav-link p {
+            display: none;
+        }
+
+        .sidebar.collapsed .menu-badge {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link::before {
+            display: none;
+        }
+
+        .sidebar.collapsed .profile-info {
+            display: none;
+        }
+
+        .sidebar.collapsed #sidebarToggle {
+            order: 1;
+        }
+
+        .sidebar.collapsed .brand-logo {
+            order: 2;
+        }
+
+        .sidebar.collapsed .brand-text {
+            display: none;
+        }
+
+        .main-wrapper.expanded {
+            margin-left: 88px;
+        }
+
+        /* =====================================================
+                    TOOLTIP
+===================================================== */
+        .sidebar.collapsed .nav-link {
+            position: relative;
+        }
+
+        .sidebar.collapsed .nav-link:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            left: 78px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #111827;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            white-space: nowrap;
+            font-size: 13px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
+            z-index: 1000;
+        }
+
+        /* =====================================================
+                CONTENT
+===================================================== */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .main-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("{{ asset('13551.jpg') }}");
+            background-repeat: repeat;
+            background-position: center;
+            background-size: 700px;
+            filter: blur(8px);
+            transform: scale(1.1);
+            opacity: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* =====================================================
+                    TOPBAR
+===================================================== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            height: 82px;
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, .8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 28px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .topbar-title h4 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .topbar-title small {
+            color: var(--muted);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .topbar,
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =====================================================
+                PROFILE SIDEBAR
+===================================================== */
         .sidebar-footer {
             padding: 20px;
             border-top: 1px solid rgba(255, 255, 255, .08);
@@ -131,102 +446,79 @@
         .profile {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 14px;
+            background: rgba(255, 255, 255, .05);
+            padding: 14px;
+            border-radius: 18px;
+            margin-bottom: 18px;
         }
 
         .profile-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: linear-gradient(135deg,
+                    #1bde1b,
+                    #49eb49);
             display: flex;
-            align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 18px;
+            align-items: center;
+            color: #fff;
             font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
         }
 
-        .profile h6 {
-            color: white;
+        .profile-info h6 {
+            color: #fff;
             margin: 0;
             font-size: 15px;
+            font-weight: 600;
         }
 
-        .profile small {
+        .profile-info small {
             color: #94a3b8;
         }
 
-        /* ===========================
-                CONTENT
-        =========================== */
-        .main-wrapper {
-            margin-left: 260px;
-            min-height: 100vh;
-        }
-
-        .topbar {
-            background: white;
-            height: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .topbar-title h4 {
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .topbar-title small {
-            color: var(--muted);
-        }
-
+        /* =====================================================
+                    CONTENT
+===================================================== */
         .content {
-            padding: 30px;
+            padding: 34px;
         }
 
-        /* ===========================
+        .content>.container-fluid {
+            padding: 0;
+        }
+
+        /* =====================================================
                 CARD
-        =========================== */
+===================================================== */
         .card {
             border: none;
-            border-radius: 18px;
-            background: var(--card);
-            box-shadow: 0 10px 30px rgba(15, 23, 42, .06);
-            transition: .3s;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, .10);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-header {
-            background: white;
-            border: none;
+            background: #fff;
             border-bottom: 1px solid var(--border);
             font-weight: 600;
-            border-radius: 18px 18px 0 0 !important;
         }
 
-        /* ===========================
-                ALERT
-        =========================== */
-        .alert {
-            border: none;
-            border-radius: 12px;
-        }
-
-        /* ===========================
+        /* =====================================================
                 BUTTON
-        =========================== */
+===================================================== */
         .btn {
-            border-radius: 10px;
-            font-weight: 500;
+            border-radius: 12px;
+            font-weight: 600;
         }
 
         .btn-primary {
@@ -235,18 +527,18 @@
         }
 
         .btn-primary:hover {
-            background: var(--primary-hover);
+            background: #1d4ed8;
         }
 
-        /* ===========================
+        /* =====================================================
                 TABLE
-        =========================== */
+===================================================== */
         .table {
             vertical-align: middle;
         }
 
         .table thead {
-            background: #f1f5f9;
+            background: #f8fafc;
         }
 
         .table thead th {
@@ -255,57 +547,170 @@
             font-weight: 600;
         }
 
-        /* ===========================
+        /* =====================================================
+                ALERT
+===================================================== */
+        .alert {
+            border: none;
+            border-radius: 14px;
+        }
+
+        /* ====================================================
                 SCROLLBAR
-        =========================== */
+===================================================== */
         ::-webkit-scrollbar {
             width: 8px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 20px;
+            border-radius: 50px;
         }
 
-        /* ===========================
-                RESPONSIVE
-        =========================== */
-        @media(max-width:992px) {
-            .sidebar {
-                width: 80px;
-            }
-
-            .brand h4,
-            .brand small,
-            .sidebar span,
-            .profile-info {
-                display: none;
-            }
-
-            .main-wrapper {
-                margin-left: 80px;
-            }
-
-            .sidebar .nav-link {
-                justify-content: center;
-            }
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        @media(max-width:768px) {
+        /* =====================================================
+                    LOGOUT BUTTON
+===================================================== */
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 16px;
+            color: #f87171;
+            background: rgba(239, 68, 68, .08);
+            transition: .3s;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* =====================================================
+                    MOBILE OVERLAY
+===================================================== */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .45);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s;
+            z-index: 900;
+        }
+
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* =====================================================
+                    RESPONSIVE
+===================================================== */
+        @media (max-width:992px) {
             .sidebar {
-                display: none;
+                left: -100%;
+                width: 280px;
+            }
+
+            .sidebar.show {
+                left: 0;
             }
 
             .main-wrapper {
                 margin-left: 0;
             }
+        }
 
+        @media (max-width:768px) {
             .topbar {
-                padding: 20px;
+                padding: 0 18px;
+            }
+
+            .topbar-title h4 {
+                font-size: 18px;
             }
 
             .content {
                 padding: 20px;
+            }
+        }
+
+        /* =====================================================
+                    RIPPLE
+===================================================== */
+
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .35);
+            transform: translate(-50%, -50%);
+            animation: ripple .6s linear;
+        }
+
+        @keyframes ripple {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(18);
+            }
+        }
+
+        /* =====================================================
+                SIDEBAR ANIMATION
+===================================================== */
+        .sidebar .nav-item {
+            opacity: 0;
+            transform: translateX(-15px);
+            animation: slideMenu .45s forwards;
+        }
+
+        .sidebar .nav-item:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .sidebar .nav-item:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .sidebar .nav-item:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .sidebar .nav-item:nth-child(4) {
+            animation-delay: .20s;
+        }
+
+        .sidebar .nav-item:nth-child(5) {
+            animation-delay: .25s;
+        }
+
+        .sidebar .nav-item:nth-child(6) {
+            animation-delay: .30s;
+        }
+
+        @keyframes slideMenu {
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
     </style>
@@ -315,10 +720,17 @@
 <body>
     <div class="sidebar">
         <!-- Logo -->
-        <!-- Logo -->
         <div class="brand">
-            <small>MTsN 1 Banyuwangi</small>
-            <h4>Sistem Persuratan</h4>
+            <div class="brand-logo">
+                <span class="material-symbols-outlined">account_balance</span>
+            </div>
+            <div class="brand-text">
+                <small>MTsN 1 Banyuwangi</small>
+                <h4>Persuratan</h4>
+            </div>
+            <button class="btn btn-light border" id="sidebarToggle">
+                <span class="material-symbols-outlined">density_small</span>
+            </button>
         </div>
         <!-- Menu -->
         <div class="menu">
@@ -326,46 +738,48 @@
                 Menu Utama
             </div>
             <ul class="nav flex-column">
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('dashboard') }}"
-                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <i class="bi bi-grid-1x2-fill"></i>
-                        <span>Dashboard</span>
+                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" data-title="Dashboard">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('surat-masuk.index') }}"
-                        class="nav-link {{ request()->routeIs('surat-masuk.*') ? 'active' : '' }}">
-                        <i class="bi bi-envelope-paper-fill"></i>
-                        <span>Surat Masuk</span>
+                        class="nav-link {{ request()->routeIs('surat-masuk.*') ? 'active' : '' }}"
+                        data-title="Surat Masuk">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <p>Surat Masuk</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('surat-keluar.index') }}"
-                        class="nav-link {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}">
-                        <i class="bi bi-send-fill"></i>
-                        <span>Surat Keluar</span>
+                        class="nav-link {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}"
+                        data-title="Surat Keluar">
+                        <span class="material-symbols-outlined">send</span>
+                        <p>Surat Keluar</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('disposisi.index') }}"
-                        class="nav-link {{ request()->routeIs('disposisi.*') ? 'active' : '' }}">
-                        <i class="bi bi-arrow-left-right"></i>
-                        <span>Disposisi</span>
+                        class="nav-link {{ request()->routeIs('disposisi.*') ? 'active' : '' }}" data-title="Disposisi">
+                        <span class="material-symbols-outlined">cycle</span>
+                        <p>Disposisi</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('arsip.index') }}"
-                        class="nav-link {{ request()->routeIs('arsip.*') ? 'active' : '' }}">
-                        <i class="bi bi-archive-fill"></i>
-                        <span>Arsip</span>
+                        class="nav-link {{ request()->routeIs('arsip.*') ? 'active' : '' }}" data-title="Arsip">
+                        <span class="material-symbols-outlined">archive</span>
+                        <p>Arsip</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center justify-content-between">
                     <a href="{{ route('laporan.index') }}"
-                        class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
-                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
-                        <span>Laporan</span>
+                        class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}" data-title="Laporan">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <p>Laporan</p>
                     </a>
                 </li>
             </ul>
@@ -373,16 +787,14 @@
         <!-- Footer Sidebar -->
         <div class="sidebar-footer">
             <div class="profile">
-                <div class="profile-avatar">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                </div>
+                <div class="profile-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
                 <div class="profile-info">
                     <h6>{{ Auth::user()->name }}</h6>
                     <small>Administrator</small>
                 </div>
             </div>
-            <a href="{{ route('logout') }}" class="nav-link text-danger"
-                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+            <a href="{{ route('logout') }}" class="logout-btn" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
             </a>
@@ -391,9 +803,10 @@
             </form>
         </div>
     </div>
+    <div class="sidebar-overlay"></div>
     <!-- ===========================
-        MAIN CONTENT
-=========================== -->
+            MAIN CONTENT
+    =========================== -->
     <div class="main-wrapper">
         <!-- Topbar -->
         <div class="topbar">
@@ -460,14 +873,90 @@
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Auto close alert
-        document.addEventListener('DOMContentLoaded', function () {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function (alert) {
+
+        document.addEventListener("DOMContentLoaded", () => {
+            /* ===========================
+                    ALERT
+            =========================== */
+            document.querySelectorAll(".alert").forEach(alert => {
                 setTimeout(() => {
-                    const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-                    bsAlert.close();
+                    bootstrap.Alert
+                        .getOrCreateInstance(alert)
+                        .close();
                 }, 4000);
+            });
+            /* ===========================
+                    ELEMENT
+            =========================== */
+            const sidebar = document.querySelector(".sidebar");
+            const wrapper = document.querySelector(".main-wrapper");
+            const overlay = document.querySelector(".sidebar-overlay");
+            const toggle = document.getElementById("sidebarToggle");
+            /* ===========================
+                RESTORE COLLAPSE
+            =========================== */
+            if (localStorage.getItem("sidebar-collapsed") === "true") {
+                sidebar.classList.add("collapsed");
+                wrapper.classList.add("expanded");
+            }
+            /* ===========================
+                    TOGGLE
+            =========================== */
+            toggle.addEventListener("click", () => {
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.toggle("show");
+                    overlay.classList.toggle("show");
+                    return;
+                }
+                sidebar.classList.toggle("collapsed");
+                wrapper.classList.toggle("expanded");
+                localStorage.setItem(
+                    "sidebar-collapsed",
+                    sidebar.classList.contains("collapsed")
+                );
+            });
+            /* ===========================
+                CLICK OUTSIDE
+            =========================== */
+            overlay.addEventListener("click", () => {
+                sidebar.classList.remove("show");
+                overlay.classList.remove("show");
+            });
+            /* ===========================
+                AUTO CLOSE MOBILE
+            =========================== */
+            document.querySelectorAll(".sidebar .nav-link")
+                .forEach(item => {
+                    item.addEventListener("click", () => {
+                        if (window.innerWidth <= 992) {
+                            sidebar.classList.remove("show");
+                            overlay.classList.remove("show");
+                        }
+                    });
+                });
+            /* ===========================
+                WINDOW RESIZE
+            =========================== */
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 992) {
+                    overlay.classList.remove("show");
+                    sidebar.classList.remove("show");
+                }
+            });
+            /* ===========================
+                RIPPLE EFFECT
+            =========================== */
+            document.querySelectorAll(".nav-link").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    const ripple = document.createElement("span");
+                    ripple.className = "ripple";
+                    ripple.style.left = e.offsetX + "px";
+                    ripple.style.top = e.offsetY + "px";
+                    this.appendChild(ripple);
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
             });
         });
     </script>

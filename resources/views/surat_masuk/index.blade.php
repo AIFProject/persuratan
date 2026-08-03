@@ -26,10 +26,9 @@
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body d-flex align-items-center">
-                        <div class="rounded-circle bg-primary bg-opacity-10
-                                        d-flex align-items-center justify-content-center" style="width:60px;height:60px;">
-                            <i class="bi bi-envelope-paper-fill
-                                            text-primary fs-3"></i>
+                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                            style="width:60px;height:60px;">
+                            <span class="material-symbols-outlined">mail</span>
                         </div>
                         <div class="ms-3">
                             <small class="text-secondary">
@@ -141,18 +140,22 @@
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
                                         <a href="{{ route('surat-masuk.show', $sm->id) }}"
-                                            class="btn btn-success border rounded-circle" title="Detail"
-                                            style="width:40px;height:40px;">
-                                            <i class="bi bi-eye text-primary"></i>
+                                            class="btn btn-success border rounded-circle d-flex align-items-center justify-content-center"
+                                            title="Detail" style="width:40px;height:40px;">
+                                            <span class="material-symbols-outlined">visibility</span>
                                         </a>
                                         <a href="{{ route('surat-masuk.edit', $sm->id) }}"
-                                            class="btn btn-warning border rounded-circle" title="Edit"
-                                            style="width:40px;height:40px;">
-                                            <i class="bi bi-pencil text-warning"></i>
+                                            class="btn btn-warning border rounded-circle d-flex align-items-center justify-content-center"
+                                            title="Edit" style="width:40px;height:40px;">
+                                            <span class="material-symbols-outlined p-1">edit</span>
                                         </a>
-                                        <button class="btn btn-danger border rounded-circle" style="width:40px;height:40px;"
-                                            data-bs-toggle="modal" data-bs-target="#deleteModal{{ $sm->id }}">
-                                            <i class="bi bi-trash text-danger"></i>
+                                        <button
+                                            class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center    "
+                                            style="width:40px;height:40px;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $sm->id }}">
+                                            <span class="material-symbols-outlined">
+                                                delete
+                                            </span>
                                         </button>
                                     </div>
                                     <!-- Modal Delete -->
@@ -170,7 +173,8 @@
                                                 <div class="modal-body py-4">
                                                     <div class="text-center">
                                                         <i class="bi bi-exclamation-circle-fill
-                                                        text-danger" style="font-size:55px;"></i>
+                                                                                        text-danger"
+                                                            style="font-size:55px;"></i>
                                                         <h5 class="mt-3">
                                                             Yakin ingin menghapus?
                                                         </h5>

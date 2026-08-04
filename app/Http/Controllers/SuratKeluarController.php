@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SuratKeluarRequest;
 use App\Models\SuratKeluar;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SuratKeluarController extends Controller
 {
+    protected GoogleDriveService $googleDriveService;
+
+    public function __construct(GoogleDriveService $googleDriveService)
+    {
+        $this->googleDriveService = $googleDriveService;
+    }
+
     public function index(Request $request)
     {
         $query = SuratKeluar::latest();
@@ -35,31 +42,24 @@ class SuratKeluarController extends Controller
 
     public function store(SuratKeluarRequest $request)
     {
-        try {
+        $data = $request->validated();
 
-            $data = $request->validated();
+        if ($request->hasFile('file_surat')) {
 
-            if ($request->hasFile('file_surat')) {
+            $driveFile = $this->googleDriveService->upload(
+                $request->file('file_surat')
+            );
 
-                $data['file_surat'] = $request
-                    ->file('file_surat')
-                    ->store('surat_keluar', 'public');
-
-            }
-
-            SuratKeluar::create($data);
-
-            return redirect()
-                ->route('surat-keluar.index')
-                ->with('success', 'Surat keluar berhasil ditambahkan.');
-
-        } catch (\Exception $e) {
-
-            return back()
-                ->withInput()
-                ->with('error', 'Gagal menyimpan surat keluar. '.$e->getMessage());
-
+            $data['file_surat'] = $driveFile->getName();
+            $data['google_drive_id'] = $driveFile->getId();
+            $data['google_drive_url'] = $driveFile->getWebViewLink();
         }
+
+        SuratKeluar::create($data);
+
+        return redirect()
+            ->route('surat-keluar.index')
+            ->with('success', 'Surat keluar berhasil disimpan.');
     }
 
     public function show(SuratKeluar $suratKeluar)
@@ -74,49 +74,40 @@ class SuratKeluarController extends Controller
 
     public function update(SuratKeluarRequest $request, SuratKeluar $suratKeluar)
     {
-        try {
+        $data = $request->validated();
 
-            $data = $request->validated();
+        if ($request->hasFile('file_surat')) {
 
-            if ($request->hasFile('file_surat')) {
-
-                if ($suratKeluar->file_surat) {
-
-                    Storage::disk('public')
-                        ->delete($suratKeluar->file_surat);
-
-                }
-
-                $data['file_surat'] = $request
-                    ->file('file_surat')
-                    ->store('surat_keluar', 'public');
-
+            if ($suratKeluar->google_drive_id) {
+                $this->googleDriveService->delete(
+                    $suratKeluar->google_drive_id
+                );
             }
 
-            $suratKeluar->update($data);
+            $driveFile = $this->googleDriveService->upload(
+                $request->file('file_surat')
+            );
 
-            return redirect()
-                ->route('surat-keluar.index')
-                ->with('success', 'Surat keluar berhasil diperbarui.');
-
-        } catch (\Exception $e) {
-
-            return back()
-                ->withInput()
-                ->with('error', 'Gagal memperbarui surat keluar: '.$e->getMessage());
-
+            $data['file_surat'] = $driveFile->getName();
+            $data['google_drive_id'] = $driveFile->getId();
+            $data['google_drive_url'] = $driveFile->getWebViewLink();
         }
+
+        $suratKeluar->update($data);
+
+        return redirect()
+            ->route('surat-keluar.index')
+            ->with('success', 'Surat keluar berhasil diperbarui.');
     }
 
     public function destroy(SuratKeluar $suratKeluar)
     {
         try {
 
-            if ($suratKeluar->file_surat) {
-
-                Storage::disk('public')
-                    ->delete($suratKeluar->file_surat);
-
+            if ($suratKeluar->google_drive_id) {
+                $this->googleDriveService->delete(
+                    $suratKeluar->google_drive_id
+                );
             }
 
             $suratKeluar->delete();
@@ -129,21 +120,16 @@ class SuratKeluarController extends Controller
 
             return redirect()
                 ->route('surat-keluar.index')
-                ->with('error', 'Gagal menghapus surat keluar: '.$e->getMessage());
-
+                ->with('error', 'Gagal menghapus surat: '.$e->getMessage());
         }
     }
 
     public function download(SuratKeluar $suratKeluar)
     {
-        if (! $suratKeluar->file_surat) {
-
-            return back()
-                ->with('error', 'File tidak ditemukan.');
-
+        if (! $suratKeluar->google_drive_url) {
+            return back()->with('error', 'File tidak ditemukan.');
         }
 
-        return Storage::disk('public')
-            ->download($suratKeluar->file_surat);
+        return redirect($suratKeluar->google_drive_url);
     }
 }

@@ -3,8 +3,8 @@
 @section('content')
     <div class="login-page">
         <!-- ==========================
-                            HERO SECTION
-                    =========================== -->
+                HERO SECTION
+        =========================== -->
         <div class="login-hero">
             <div class="hero-grid"></div>
             <div class="hero-content">
@@ -37,95 +37,57 @@
                     </p>
                 </div>
                 <div class="hero-feature">
-
                     <div class="feature-item">
-
                         <span class="material-symbols-outlined">
                             inbox
                         </span>
-
                         <div>
-
                             <strong>Surat Masuk</strong>
-
                             <small>
                                 Pencatatan dan penerimaan surat masuk.
                             </small>
-
                         </div>
-
                     </div>
-
                     <div class="feature-item">
-
                         <span class="material-symbols-outlined">
                             outgoing_mail
                         </span>
-
                         <div>
-
                             <strong>Surat Keluar</strong>
-
                             <small>
                                 Pembuatan dan distribusi surat keluar.
                             </small>
-
                         </div>
-
                     </div>
-
                     <div class="feature-item">
-
                         <span class="material-symbols-outlined">
                             assignment
                         </span>
-
                         <div>
-
                             <strong>Disposisi</strong>
-
                             <small>
                                 Penerusan dan tindak lanjut surat.
                             </small>
-
                         </div>
-
                     </div>
-
                     <div class="feature-item">
-
                         <span class="material-symbols-outlined">
                             folder_managed
                         </span>
-
                         <div>
-
                             <strong>Arsip Digital</strong>
-
                             <small>
                                 Penyimpanan dokumen secara elektronik.
                             </small>
-
                         </div>
-
                     </div>
-
                 </div>
-
                 <div class="hero-footer">
-
                     © {{ date('Y') }} MTsN 1 Banyuwangi
-
                     <br>
-
                     <small>
                         Sistem Informasi Persuratan
                     </small>
-
-                </div>
-                <div class="hero-footer">
-                    © {{ date('Y') }}
-                    MTsN 1 Banyuwangi
                 </div>
             </div>
             <div class="hero-watermark">

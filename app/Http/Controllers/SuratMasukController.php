@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SuratMasukRequest;
 use App\Models\SuratMasuk;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SuratMasukController extends Controller
 {
+    protected GoogleDriveService $googleDriveService;
+
+    public function __construct(GoogleDriveService $googleDriveService)
+    {
+        $this->googleDriveService = $googleDriveService;
+    }
+
     public function index(Request $request)
     {
         $query = SuratMasuk::latest();
@@ -39,10 +47,15 @@ class SuratMasukController extends Controller
 
         if ($request->hasFile('file_surat')) {
 
-            $data['file_surat'] = $request
-                ->file('file_surat')
-                ->store('surat_masuk', 'public');
+            $driveFile = $this->googleDriveService->upload(
+                $request->file('file_surat')
+            );
 
+            $data['file_surat'] = $driveFile->getName();
+
+            $data['google_drive_id'] = $driveFile->getId();
+
+            $data['google_drive_url'] = $driveFile->getWebViewLink();
         }
 
         SuratMasuk::create($data);
@@ -89,13 +102,15 @@ class SuratMasukController extends Controller
     {
         try {
 
-            if ($suratMasuk->file_surat) {
-                Storage::disk('public')
-                    ->delete($suratMasuk->file_surat);
+            if ($suratMasuk->google_drive_id) {
+
+                $this->googleDriveService->delete(
+                    $suratMasuk->google_drive_id
+                );
+
             }
 
             $suratMasuk->delete();
-
             return redirect()
                 ->route('surat-masuk.index')
                 ->with('success', 'Surat masuk berhasil dihapus');
@@ -111,12 +126,10 @@ class SuratMasukController extends Controller
 
     public function download(SuratMasuk $suratMasuk)
     {
-        if (! $suratMasuk->file_surat) {
-            return back()
-                ->with('error', 'File tidak ditemukan.');
+        if (! $suratMasuk->google_drive_url) {
+            return back()->with('error', 'File belum tersedia.');
         }
 
-        return Storage::disk('public')
-            ->download($suratMasuk->file_surat);
+        return redirect($suratMasuk->google_drive_url);
     }
 }

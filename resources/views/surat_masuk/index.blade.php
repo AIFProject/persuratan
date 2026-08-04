@@ -125,82 +125,48 @@
                                     {{ $sm->perihal }}
                                 </td>
                                 <td class="text-center">
-                                    @if($sm->file_surat)
+                                    @if ($sm->file_surat)
                                         <a href="{{ route('surat-masuk.download', $sm->id) }}"
                                             class="badge rounded-pill text-bg-success text-decoration-none px-3 py-2">
                                             <i class="bi bi-file-earmark-pdf-fill me-1"></i>
                                             PDF
                                         </a>
                                     @else
-                                        <span class="badge text-bg-secondary rounded-pill">
+                                        <span class="badge rounded-pill text-bg-secondary px-3 py-2">
                                             Tidak Ada
                                         </span>
                                     @endif
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
+                                        {{-- Detail --}}
                                         <a href="{{ route('surat-masuk.show', $sm->id) }}"
-                                            class="btn btn-success border rounded-circle d-flex align-items-center justify-content-center"
+                                            class="btn btn-success rounded-circle d-flex align-items-center justify-content-center"
                                             title="Detail" style="width:40px;height:40px;">
-                                            <span class="material-symbols-outlined">visibility</span>
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span>
                                         </a>
+                                        {{-- Edit --}}
                                         <a href="{{ route('surat-masuk.edit', $sm->id) }}"
-                                            class="btn btn-warning border rounded-circle d-flex align-items-center justify-content-center"
+                                            class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center"
                                             title="Edit" style="width:40px;height:40px;">
-                                            <span class="material-symbols-outlined p-1">edit</span>
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span>
                                         </a>
-                                        <button
-                                            class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center    "
-                                            style="width:40px;height:40px;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $sm->id }}">
+                                        {{-- Delete --}}
+                                        <button type="button"
+                                            class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center btn-delete"
+                                            style="width:40px;height:40px;" title="Hapus" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal" data-id="{{ $sm->id }}"
+                                            data-nomor="{{ $sm->nomor_surat }}" data-pengirim="{{ $sm->pengirim }}"
+                                            data-perihal="{{ $sm->perihal }}"
+                                            data-url="{{ route('surat-masuk.destroy', $sm->id) }}">
                                             <span class="material-symbols-outlined">
                                                 delete
                                             </span>
                                         </button>
-                                    </div>
-                                    <!-- Modal Delete -->
-                                    <div class="modal fade" id="deleteModal{{ $sm->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content border-0 shadow">
-                                                <div class="modal-header border-0 pb-0">
-                                                    <h5 class="modal-title">
-                                                        <i class="bi bi-trash text-danger me-2"></i>
-                                                        Hapus Surat
-                                                    </h5>
-                                                    <button class="btn-close" data-bs-dismiss="modal">
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body py-4">
-                                                    <div class="text-center">
-                                                        <i class="bi bi-exclamation-circle-fill
-                                                                                        text-danger"
-                                                            style="font-size:55px;"></i>
-                                                        <h5 class="mt-3">
-                                                            Yakin ingin menghapus?
-                                                        </h5>
-                                                        <p class="text-secondary mb-0">
-                                                            Surat
-                                                            <strong>
-                                                                {{ $sm->nomor_surat }}
-                                                            </strong>
-                                                            akan dihapus permanen.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer border-0">
-                                                    <button class="btn btn-light" data-bs-dismiss="modal">
-                                                        Batal
-                                                    </button>
-                                                    <form action="{{ route('surat-masuk.destroy', $sm->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger">
-                                                            Ya, Hapus
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -208,7 +174,8 @@
                             <tr>
                                 <td colspan="7">
                                     <div class="text-center py-5">
-                                        <i class="bi bi-inbox" style="font-size:70px;color:#cbd5e1;"></i>
+                                        <i class="bi bi-inbox" style="font-size:70px;color:#cbd5e1;">
+                                        </i>
                                         <h5 class="mt-3">
                                             Belum Ada Surat Masuk
                                         </h5>
@@ -249,6 +216,76 @@
                     <div class="col-md-6 d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
                         {{ $suratMasuk->withQueryString()->links() }}
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =======================================================
+    DELETE MODAL
+    ======================================================= -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">
+                        <i class="bi bi-trash-fill text-danger me-2"></i>
+                        Hapus Surat
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="rounded-circle bg-danger bg-opacity-10 mx-auto mb-4 d-flex justify-content-center align-items-center"
+                        style="width:90px;height:90px;">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size:42px;">
+                        </i>
+                    </div>
+                    <h4 class="fw-bold mb-3">
+                        Yakin ingin menghapus?
+                    </h4>
+                    <div class="card bg-light border-0">
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <small class="text-secondary">
+                                    Nomor Surat
+                                </small>
+                                <div class="fw-semibold" id="modalNomorSurat">
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <small class="text-secondary">
+                                    Pengirim
+                                </small>
+                                <div class="fw-semibold" id="modalPengirim">
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-secondary">
+                                    Perihal
+                                </small>
+                                <div id="modalPerihal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-secondary mt-4 mb-0">
+                        Data yang dihapus
+                        <strong>tidak dapat dikembalikan.</strong>
+                    </p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button class="btn btn-light px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Batal
+                    </button>
+                    <form id="deleteForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger px-4" id="btnDelete">
+                            <i class="bi bi-trash me-2"></i>
+                            Ya, Hapus
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

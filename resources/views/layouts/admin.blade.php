@@ -116,7 +116,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            z-index: 1000;
+            z-index: 200;
             transition: var(--transition);
             box-shadow:
                 18px 0 45px rgba(15, 23, 42, .12);
@@ -192,7 +192,7 @@
 ===================================================== */
         .sidebar .nav {
             display flex;
-            flex-dirction: column;
+            flex-direction: column;
             gap: 8px;
         }
 
@@ -370,6 +370,7 @@
                 CONTENT
 ===================================================== */
         .main-wrapper {
+            position: relative;
             margin-left: var(--sidebar-width);
             min-height: 100vh;
             transition: var(--transition);
@@ -383,8 +384,8 @@
             background-repeat: repeat;
             background-position: center;
             background-size: 700px;
-            filter: blur(8px);
-            transform: scale(1.1);
+            filter: blur(3px);
+            opacity: .12;
             opacity: 1;
             pointer-events: none;
             z-index: 0;
@@ -397,7 +398,7 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            height: 82px;
+            height: 70px;
             background: rgba(255, 255, 255, .82);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(226, 232, 240, .8);
@@ -713,6 +714,18 @@
                 transform: translateX(0);
             }
         }
+
+        .modal {
+            z-index: 2000 !important;
+        }
+
+        .modal-dialog {
+            z-index: 2001 !important;
+        }
+
+        .modal-content {
+            z-index: 2002 !important;
+        }
     </style>
     @stack('styles')
 </head>
@@ -873,10 +886,9 @@
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
         document.addEventListener("DOMContentLoaded", () => {
             /* ===========================
-                    ALERT
+                    ALERT AUTO CLOSE
             =========================== */
             document.querySelectorAll(".alert").forEach(alert => {
                 setTimeout(() => {
@@ -892,13 +904,24 @@
             const wrapper = document.querySelector(".main-wrapper");
             const overlay = document.querySelector(".sidebar-overlay");
             const toggle = document.getElementById("sidebarToggle");
+            if (!sidebar || !toggle) return;
             /* ===========================
-                RESTORE COLLAPSE
+                    RESTORE STATE
             =========================== */
-            if (localStorage.getItem("sidebar-collapsed") === "true") {
-                sidebar.classList.add("collapsed");
-                wrapper.classList.add("expanded");
+            function restoreSidebar() {
+                if (window.innerWidth > 992) {
+                    const collapsed =
+                        localStorage.getItem("sidebar-collapsed");
+                    if (collapsed === "true") {
+                        sidebar.classList.add("collapsed");
+                        wrapper.classList.add("expanded");
+                    }
+                } else {
+                    sidebar.classList.remove("collapsed");
+                    wrapper.classList.remove("expanded");
+                }
             }
+            restoreSidebar();
             /* ===========================
                     TOGGLE
             =========================== */
@@ -906,28 +929,33 @@
                 if (window.innerWidth <= 992) {
                     sidebar.classList.toggle("show");
                     overlay.classList.toggle("show");
-                    return;
+                } else {
+                    const collapsed =
+                        sidebar.classList.toggle("collapsed");
+                    wrapper.classList.toggle(
+                        "expanded",
+                        collapsed
+                    );
+                    localStorage.setItem(
+                        "sidebar-collapsed",
+                        collapsed
+                    );
                 }
-                sidebar.classList.toggle("collapsed");
-                wrapper.classList.toggle("expanded");
-                localStorage.setItem(
-                    "sidebar-collapsed",
-                    sidebar.classList.contains("collapsed")
-                );
             });
             /* ===========================
-                CLICK OUTSIDE
+                    OVERLAY MOBILE
             =========================== */
-            overlay.addEventListener("click", () => {
+            overlay?.addEventListener("click", () => {
                 sidebar.classList.remove("show");
                 overlay.classList.remove("show");
             });
             /* ===========================
-                AUTO CLOSE MOBILE
+                    CLOSE MOBILE AFTER CLICK
             =========================== */
-            document.querySelectorAll(".sidebar .nav-link")
-                .forEach(item => {
-                    item.addEventListener("click", () => {
+            document
+                .querySelectorAll(".sidebar .nav-link")
+                .forEach(link => {
+                    link.addEventListener("click", () => {
                         if (window.innerWidth <= 992) {
                             sidebar.classList.remove("show");
                             overlay.classList.remove("show");
@@ -935,29 +963,55 @@
                     });
                 });
             /* ===========================
-                WINDOW RESIZE
+                    RESIZE
             =========================== */
             window.addEventListener("resize", () => {
+                restoreSidebar();
                 if (window.innerWidth > 992) {
-                    overlay.classList.remove("show");
                     sidebar.classList.remove("show");
+                    overlay.classList.remove("show");
                 }
             });
             /* ===========================
-                RIPPLE EFFECT
+                    RIPPLE
             =========================== */
-            document.querySelectorAll(".nav-link").forEach(link => {
-                link.addEventListener("click", function (e) {
-                    const ripple = document.createElement("span");
-                    ripple.className = "ripple";
-                    ripple.style.left = e.offsetX + "px";
-                    ripple.style.top = e.offsetY + "px";
-                    this.appendChild(ripple);
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
+            document.querySelectorAll(".nav-link")
+                .forEach(link => {
+                    link.addEventListener("click", function (e) {
+                        const ripple =
+                            document.createElement("span");
+                        ripple.className = "ripple";
+                        const rect =
+                            this.getBoundingClientRect();
+                        ripple.style.left =
+                            (e.clientX - rect.left) + "px";
+                        ripple.style.top =
+                            (e.clientY - rect.top) + "px";
+                        this.appendChild(ripple);
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    });
                 });
-            });
+
+            const deleteForm = document.getElementById('deleteForm');
+
+            if (deleteForm) {
+                deleteForm.addEventListener('submit', function () {
+
+                    const btn = document.getElementById('btnDelete');
+
+                    if (btn) {
+                        btn.disabled = true;
+
+                        btn.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Menghapus...
+            `;
+                    }
+
+                });
+            }
         });
     </script>
     @stack('scripts')

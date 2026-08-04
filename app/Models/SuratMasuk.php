@@ -8,24 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class SuratMasuk extends Model
 {
     use HasFactory;
+
     protected $table = 'surat_masuk';
+
     protected $fillable = [
-        'nomor_surat', 
-        'tanggal_surat', 
-        'tanggal_diterima', 
+        'nomor_surat',
+        'tanggal_surat',
+        'tanggal_diterima',
         'pengirim',
-        'perihal', 
-        'sifat_surat', 
+        'perihal',
+        'sifat_surat',
         'klasifikasi',
-        'file_surat', 
-        'keterangan'
+        'google_drive_id',
+        'google_drive_url',
+        'file_surat',
+        'keterangan',
     ];
+
     protected $casts = [
         'tanggal_surat' => 'date',
         'tanggal_diterima' => 'date',
     ];
 
-    public function disposisi() {
+    public function disposisi()
+    {
         return $this->hasMany(Disposisi::class);
+    }
+
+    public function arsip()
+    {
+        return $this->hasOne(Arsip::class);
     }
 }

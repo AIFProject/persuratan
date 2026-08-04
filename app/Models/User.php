@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function arsip()
+    {
+        return $this->hasMany(Arsip::class, 'uploaded_by');
+    }
 }

@@ -223,7 +223,7 @@
             FOOTER
         ========================================================== */
         .hero-footer {
-            margin-top: 40px;
+            margin-top: 10px;
             font-size: 14px;
             color: rgba(255, 255, 255, .75);
         }

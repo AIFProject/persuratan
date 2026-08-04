@@ -150,7 +150,6 @@
                 </div>
             </div>
             <div class="table-responsive">
-                {{  get_class($results) }}
                 <table class="table table-hover align-middle mb-0">
                     <thead style="background:#f8fafc;">
                         <tr>

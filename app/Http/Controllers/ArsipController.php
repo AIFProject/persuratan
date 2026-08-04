@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arsip;
+use App\Models\SuratKeluar;
+use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -74,5 +77,48 @@ class ArsipController extends Controller
             ->withQueryString();
 
         return view('arsip.index', compact('results', 'filters'));
+    }
+
+    public function create()
+    {
+        $suratMasuk = SuratMasuk::doesntHave('arsip')->get();
+        $suratKeluar = SuratKeluar::doesntHave('arsip')->get();
+
+        return view('arsip.create', compact(
+            'suratMasuk',
+            'suratKeluar'
+        ));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|max:10240',
+        ]);
+        $file = $request->file('file');
+        $path = $file->store('arsip', 'public');
+        Arsip::create([
+            'surat_masuk_id' => $request->jenis == 'masuk' ? $request->surat_id : null,
+            'surat_keluar_id' => $request->jenis == 'keluar' ? $request->surat_id : null,
+            'nama_file' => $file->getClientOriginalName(),
+            'mime_type' => $file->getMimeType(),
+            'ukuran_file' => $file->getSize(),
+            'uploaded_by' => auth()->id(),
+        ]);
+
+        return redirect()
+            ->route('arsip.index')
+            ->with(
+                'success',
+                'Arsip berhasil ditambahkan.'
+            );
+    }
+
+    public function download(Arsip $arsip)
+    {
+        return Storage::disk('public')
+            ->download(
+                'arsip/'.$arsip->nama_file
+            );
     }
 }

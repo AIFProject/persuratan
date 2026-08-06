@@ -15,9 +15,14 @@ class DisposisiRequest extends FormRequest
     {
         return [
             'surat_masuk_id' => 'required|exists:surat_masuk,id',
-            'tujuan_disposisi' => 'required|string|max:255',
-            'isi_disposisi' => 'required|string',
+            'tujuan_disposisi' => 'required|array',
+            'tujuan_disposisi.*' => 'string',
+            'sifat_surat' => 'required|in:Segera,Sangat Segera,Rahasia',
+
+            'isi_disposisi' => 'required|array',
+            'isi_disposisi.*' => 'string',
             'tanggal_disposisi' => 'required|date',
+            'catatan' => 'nullable|string',
             'status' => 'required|in:Belum Diproses,Diproses,Selesai',
         ];
     }
@@ -33,6 +38,4 @@ class DisposisiRequest extends FormRequest
             'status.required' => 'Status wajib dipilih.',
         ];
     }
-
-
 }

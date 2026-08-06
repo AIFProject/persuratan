@@ -32,15 +32,126 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Tujuan Disposisi</label>
-    <input type="text" name="tujuan_disposisi" class="form-control @error('tujuan_disposisi') is-invalid @enderror"
-        value="{{ old('tujuan_disposisi', $disposisi->tujuan_disposisi ?? '') }}" required>
-    @error('tujuan_disposisi') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <label class="form-label fw-semibold">
+        Sifat Surat
+    </label>
+
+    <select
+        name="sifat_surat"
+        class="form-select @error('sifat_surat') is-invalid @enderror">
+
+        @foreach([
+            'Biasa',
+            'Segera',
+            'Sangat Segera',
+            'Rahasia'
+        ] as $item)
+
+            <option
+                value="{{ $item }}"
+                {{ old('sifat_surat', $disposisi->sifat_surat ?? 'Biasa') == $item ? 'selected' : '' }}>
+
+                {{ $item }}
+
+            </option>
+
+        @endforeach
+
+    </select>
+
+    @error('sifat_surat')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Isi Disposisi</label>
-    <textarea name="isi_disposisi" class="form-control @error('isi_disposisi') is-invalid @enderror" rows="3"
-        required>{{ old('isi_disposisi', $disposisi->isi_disposisi ?? '') }}</textarea>
-    @error('isi_disposisi') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <label class="form-label fw-semibold">
+        Diteruskan Kepada
+    </label>
+    @php
+        $selected = old(
+            'tujuan_disposisi',
+            isset($disposisi)
+                ? explode(',', $disposisi->tujuan_disposisi)
+                : []
+        );
+    @endphp
+    @foreach([
+        'Kepala Madrasah',
+        'Kepala Tata Usaha',
+        'Wakil Kepala Bidang Kurikulum',
+        'Wakil Kepala Bidang Kesiswaan',
+        'Wakil Kepala Bidang Humas',
+        'Wakil Kepala Bidang Sarana Prasarana',
+        'Wali Kelas / Guru BK / Panitia'
+    ] as $tujuan)
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                name="tujuan_disposisi[]"
+                value="{{ $tujuan }}"
+                {{ in_array($tujuan,$selected) ? 'checked' : '' }}>
+            <label class="form-check-label">
+                {{ $tujuan }}
+            </label>
+        </div>
+    @endforeach
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold">
+        Dengan Hormat Harap
+    </label>
+    @php
+        $isi = old(
+            'isi_disposisi',
+            isset($disposisi)
+                ? explode(',', $disposisi->isi_disposisi)
+                : []
+        );
+    @endphp
+    @foreach([
+        'Tanggapan dan Saran',
+        'Proses Lebih Lanjut',
+        'Koordinasi / Konfirmasikan'
+    ] as $item)
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                name="isi_disposisi[]"
+                value="{{ $item }}"
+                {{ in_array($item,$isi) ? 'checked' : '' }}>
+            <label class="form-check-label">
+                {{ $item }}
+            </label>
+        </div>
+    @endforeach
+</div>
+
+<div class="mb-3">
+
+    <label class="form-label fw-semibold">
+
+        Catatan
+
+    </label>
+
+    <textarea
+        name="catatan"
+        rows="3"
+        class="form-control @error('catatan') is-invalid @enderror">{{ old('catatan', $disposisi->catatan ?? '') }}</textarea>
+
+    @error('catatan')
+        <div class="invalid-feedback">
+
+            {{ $message }}
+
+        </div>
+    @enderror
+
 </div>

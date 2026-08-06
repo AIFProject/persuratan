@@ -8,7 +8,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.13.1/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Google Font -->
     <link rel="icon" type="image/png" href="{{ asset('logo-mtsn.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -714,18 +714,6 @@
                 transform: translateX(0);
             }
         }
-
-        .modal {
-            z-index: 2000 !important;
-        }
-
-        .modal-dialog {
-            z-index: 2001 !important;
-        }
-
-        .modal-content {
-            z-index: 2002 !important;
-        }
     </style>
     @stack('styles')
 </head>
@@ -772,6 +760,14 @@
                         data-title="Surat Keluar">
                         <span class="material-symbols-outlined">send</span>
                         <p>Surat Keluar</p>
+                    </a>
+                </li>
+                <li class="nav-item d-flex align-items-center justify-content-between">
+                    <a href="{{ route('surat-keputusan.index') }}"
+                        class="nav-link {{ request()->routeIs('surat-keputusan.*') ? 'active' : '' }}"
+                        data-title="Surat Keputusan">
+                        <span class="material-symbols-outlined">gavel</span>
+                        <p>Surat Keputusan</p>
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center justify-content-between">
@@ -993,27 +989,9 @@
                         }, 600);
                     });
                 });
-
-            const deleteForm = document.getElementById('deleteForm');
-
-            if (deleteForm) {
-                deleteForm.addEventListener('submit', function () {
-
-                    const btn = document.getElementById('btnDelete');
-
-                    if (btn) {
-                        btn.disabled = true;
-
-                        btn.innerHTML = `
-                <span class="spinner-border spinner-border-sm me-2"></span>
-                Menghapus...
-            `;
-                    }
-
-                });
-            }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
 </body>
 

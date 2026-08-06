@@ -1,7 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Surat Masuk')
+@section('title', 'Surat Keputusan')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Surat Masuk</li>
+    <li class="breadcrumb-item active">Surat Keputusan</li>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -9,14 +9,14 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h3 class="fw-bold mb-1">
-                    <i class="bi bi-envelope-paper-fill text-primary me-2"></i>
-                    Surat Masuk
+                    <i class="bi bi-file-earmark-text-fill text-success me-2"></i>
+                    Surat Keputusan
                 </h3>
                 <p class="text-secondary mb-0">
-                    Kelola seluruh data surat masuk MTsN 1 Banyuwangi.
+                    Kelola seluruh data Surat Keputusan MTsN 1 Banyuwangi.
                 </p>
             </div>
-            <a href="{{ route('surat-masuk.create') }}" class="btn btn-primary px-4">
+            <a href="{{ route('surat-keputusan.create') }}" class="btn btn-success px-4">
                 <i class="bi bi-plus-circle me-2"></i>
                 Tambah Surat
             </a>
@@ -26,16 +26,18 @@
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body d-flex align-items-center">
-                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                        <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center"
                             style="width:60px;height:60px;">
-                            <span class="material-symbols-outlined">mail</span>
+                            <span class="material-symbols-outlined">
+                                gavel
+                            </span>
                         </div>
                         <div class="ms-3">
                             <small class="text-secondary">
-                                Total Surat
+                                Total Surat Keputusan
                             </small>
                             <h3 class="fw-bold mb-0">
-                                {{ $suratMasuk->total() }}
+                                {{ $suratKeputusan->total() }}
                             </h3>
                         </div>
                     </div>
@@ -50,9 +52,8 @@
                                     <i class="bi bi-search"></i>
                                 </span>
                                 <input type="text" class="form-control border-start-0 ps-0" name="search"
-                                    placeholder="Cari nomor surat, pengirim atau perihal..."
-                                    value="{{ request('search') }}">
-                                <button class="btn btn-primary">
+                                    placeholder="Cari nomor SK, nama SK atau perihal..." value="{{ request('search') }}">
+                                <button class="btn btn-success">
                                     Cari
                                 </button>
                             </div>
@@ -67,11 +68,11 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="fw-semibold mb-1">
-                            Daftar Surat Masuk
+                            Daftar Surat Keputusan
                         </h5>
                         <small class="text-secondary">
                             Menampilkan
-                            {{ $suratMasuk->count() }}
+                            {{ $suratKeputusan->count() }}
                             data
                         </small>
                     </div>
@@ -82,9 +83,9 @@
                     <thead style="background:#f8fafc;">
                         <tr>
                             <th width="60">No</th>
-                            <th>Nomor Surat</th>
+                            <th>Nomor SK</th>
+                            <th>Nama SK</th>
                             <th>Tanggal</th>
-                            <th>Pengirim</th>
                             <th>Perihal</th>
                             <th width="120" class="text-center">
                                 File
@@ -95,71 +96,68 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($suratMasuk as $index => $sm)
+                        @forelse($suratKeputusan as $index => $sk)
                             <tr>
                                 <td>
                                     <span class="fw-semibold">
-                                        {{ $suratMasuk->firstItem() + $index }}
+                                        {{ $suratKeputusan->firstItem() + $index }}
                                     </span>
                                 </td>
                                 <td>
                                     <div class="fw-semibold text-dark">
-                                        {{ $sm->nomor_surat }}
+                                        {{ $sk->nomor_sk }}
                                     </div>
                                     <small class="text-secondary">
-                                        ID #{{ $sm->id }}
+                                        ID #{{ $sk->id }}
                                     </small>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        {{ $sk->nama_sk }}
+                                    </div>
                                 </td>
                                 <td>
                                     <span class="badge bg-light text-dark border">
                                         <i class="bi bi-calendar-event me-1"></i>
-                                        {{ $sm->tanggal_surat->format('d/m/Y') }}
+                                        {{ $sk->tanggal->format('d/m/Y') }}
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="fw-semibold">
-                                        {{ $sm->pengirim }}
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ $sm->perihal }}
+                                    {{ $sk->perihal }}
                                 </td>
                                 <td class="text-center">
-                                    @if ($sm->file_surat)
-                                        <a href="{{ route('surat-masuk.download', $sm->id) }}"
+                                    @if($sk->google_drive_url)
+                                        <a href="{{ $sk->google_drive_url }}" target="_blank"
                                             class="btn btn-sm btn-outline-success rounded-pill">
                                             <i class="bi bi-file-earmark-pdf-fill me-1"></i>
                                             PDF
                                         </a>
                                     @else
-                                        <span class="badge rounded-pill text-bg-secondary px-3 py-2">
+                                        <span class="badge bg-secondary rounded-pill">
                                             Tidak Ada
                                         </span>
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-2">
+                                <td class="text-center">
+                                    <div class="d-inline-flex gap-2">
                                         {{-- Detail --}}
-                                        <a href="{{ route('surat-masuk.show', $sm->id) }}"
-                                            class="btn btn-success rounded-circle d-flex align-items-center justify-content-center"
-                                            title="Detail" style="width:40px;height:40px;">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
+                                        @if($sk->google_drive_url)
+                                            <a href="{{ route('surat-keputusan.show', $sk->id) }}"
+                                                class="btn btn-sm btn-success rounded-circle" title="Lihat">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        @endif
                                         {{-- Edit --}}
-                                        <a href="{{ route('surat-masuk.edit', $sm->id) }}"
-                                            class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center"
-                                            title="Edit" style="width:40px;height:40px;">
+                                        <a href="{{ route('surat-keputusan.edit', $sk->id) }}"
+                                            class="btn btn-sm btn-warning rounded-circle" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        {{-- Delete --}}
-                                        <form action="{{ route('surat-masuk.destroy', $sm->id) }}" method="POST"
-                                            class="delete-form d-inline">
+                                        {{-- Hapus --}}
+                                        <form action="{{ route('surat-keputusan.destroy', $sk->id) }}" method="POST"
+                                            class="d-inline form-delete">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center"
-                                                style="width:40px;height:40px;" title="Hapus"
-                                                data-nomor="{{ $sm->nomor_surat }}">
+                                            <button type="submit" class="btn btn-sm btn-danger rounded-circle" title="Hapus">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -168,79 +166,58 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">
-                                    <div class="text-center py-5">
-                                        <i class="bi bi-inbox" style="font-size:70px;color:#cbd5e1;">
-                                        </i>
-                                        <h5 class="mt-3">
-                                            Belum Ada Surat Masuk
-                                        </h5>
-                                        <p class="text-secondary">
-                                            Silakan tambahkan data surat masuk terlebih dahulu.
-                                        </p>
-                                        <a href="{{ route('surat-masuk.create') }}" class="btn btn-primary">
-                                            <i class="bi bi-plus-circle me-2"></i>
-                                            Tambah Surat
-                                        </a>
-                                    </div>
+                                <td colspan="7" class="text-center py-5">
+                                    <img src="{{ asset('empty.svg') }}" alt="Empty" width="180" class="mb-3">
+                                    <h5 class="fw-semibold">
+                                        Belum ada Surat Keputusan
+                                    </h5>
+                                    <p class="text-secondary mb-0">
+                                        Silakan tambahkan data Surat Keputusan terlebih dahulu.
+                                    </p>
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-            <!-- Footer Card -->
             <div class="card-footer bg-white border-0">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <small class="text-secondary">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="text-muted small">
+                        @if($suratKeputusan->count())
                             Menampilkan
-                            <strong>
-                                {{ $suratMasuk->firstItem() ?? 0 }}
-                            </strong>
+                            <strong>{{ $suratKeputusan->firstItem() }}</strong>
                             -
-                            <strong>
-                                {{ $suratMasuk->lastItem() ?? 0 }}
-                            </strong>
+                            <strong>{{ $suratKeputusan->lastItem() }}</strong>
                             dari
-                            <strong>
-                                {{ $suratMasuk->total() }}
-                            </strong>
-                            data surat masuk.
-                        </small>
+                            <strong>{{ $suratKeputusan->total() }}</strong>
+                            data.
+                        @else
+                            Tidak ada data.
+                        @endif
                     </div>
-                    <div class="col-md-6 d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
-                        {{ $suratMasuk->withQueryString()->links() }}
+                    <div>
+                        {{ $suratKeputusan->withQueryString()->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.delete-form').forEach(form => {
+            document.querySelectorAll('.form-delete').forEach(form => {
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
-                    const button = this.querySelector('button');
-                    const nomor = button.dataset.nomor;
                     Swal.fire({
-                        title: 'Hapus Surat?',
-                        html: `
-                                    <p>Surat <strong>${nomor}</strong> akan dihapus.</p>
-                                    <p class="text-danger mb-0">
-                                        Data yang dihapus tidak dapat dikembalikan.
-                                    </p>
-                                `,
+                        title: 'Hapus Surat Keputusan?',
+                        text: 'Data dan file di Google Drive akan ikut dihapus.',
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonText: 'Ya, Hapus',
-                        cancelButtonText: 'Batal',
-                        confirmButtonColor: '#dc3545',
+                        confirmButtonColor: '#198754',
                         cancelButtonColor: '#6c757d',
-                        reverseButtons: true
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             form.submit();

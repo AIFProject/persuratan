@@ -141,70 +141,37 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
+
+                                        <!-- Detail -->
                                         <a href="{{ route('disposisi.show', $d->id) }}"
                                             class="btn btn-success rounded-circle d-flex align-items-center justify-content-center"
                                             style="width:40px;height:40px;" title="Detail">
-                                            <span class="material-symbols-outlined">
-                                                visibility
-                                            </span>
+                                            <i class="bi bi-eye"></i>
                                         </a>
+
+                                        <!-- Edit -->
                                         <a href="{{ route('disposisi.edit', $d->id) }}"
                                             class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center"
                                             style="width:40px;height:40px;" title="Edit">
-                                            <span class="material-symbols-outlined">
-                                                edit
-                                            </span>
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <button
-                                            class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center"
-                                            style="width:40px;height:40px;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $d->id }}">
-                                            <span class="material-symbols-outlined">
-                                                delete
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <!-- Modal Delete -->
-                                    <div class="modal fade" id="deleteModal{{ $d->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content border-0 shadow">
-                                                <div class="modal-header border-0 pb-0">
-                                                    <h5 class="modal-title">
-                                                        <i class="bi bi-trash text-danger me-2"></i>
-                                                        Hapus Disposisi
-                                                    </h5>
-                                                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body py-4">
-                                                    <div class="text-center">
-                                                        <i class="bi bi-exclamation-circle-fill text-danger"
-                                                            style="font-size:55px;"></i>
-                                                        <h5 class="mt-3">
-                                                            Yakin ingin menghapus?
-                                                        </h5>
-                                                        <p class="text-secondary mb-0">
-                                                            Disposisi untuk surat
-                                                            <strong>
-                                                                {{ $d->suratMasuk->nomor_surat }}
-                                                            </strong>
-                                                            akan dihapus permanen.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer border-0">
-                                                    <button class="btn btn-light" data-bs-dismiss="modal">
-                                                        Batal
-                                                    </button>
-                                                    <form action="{{ route('disposisi.destroy', $d->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger">
-                                                            Ya, Hapus
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                        <!-- Delete -->
+                                        <form action="{{ route('disposisi.destroy', $d->id) }}" method="POST"
+                                            class="delete-form d-inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center"
+                                                style="width:40px;height:40px;" title="Hapus"
+                                                data-nomor="{{ $d->suratMasuk->nomor_surat }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </form>
+
                                     </div>
                                 </td>
                             </tr>
@@ -258,3 +225,45 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.delete-form').forEach(form => {
+
+                form.addEventListener('submit', function (e) {
+
+                    e.preventDefault();
+
+                    const nomor = this.querySelector('button').dataset.nomor;
+
+                    Swal.fire({
+                        title: 'Hapus Disposisi?',
+                        html: `
+                                <p>Disposisi untuk surat <strong>${nomor}</strong> akan dihapus.</p>
+                                <p class="text-danger mb-0">
+                                    Data yang dihapus tidak dapat dikembalikan.
+                                </p>
+                            `,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        reverseButtons: true
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+
+                    });
+
+                });
+
+            });
+
+        });
+    </script>
+@endpush

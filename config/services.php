@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google_drive' => [
+        'surat_masuk_folder' => env('GOOGLE_DRIVE_SURAT_MASUK_FOLDER_ID'),
+        'surat_keluar_folder' => env('GOOGLE_DRIVE_SURAT_KELUAR_FOLDER_ID'),
+        'surat_keputusan_folder' => env('GOOGLE_DRIVE_SURAT_KEPUTUSAN_FOLDER_ID')
+    ],
+
 ];

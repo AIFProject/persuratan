@@ -6,9 +6,8 @@ use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\SuratKeputusanController;
 use App\Http\Controllers\SuratMasukController;
-use App\Services\GoogleDriveService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,53 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/surat-keluar', [LaporanController::class, 'cetakSuratKeluar'])->name('laporan.surat-keluar');
     Route::get('/google/auth', [GoogleDriveController::class, 'redirect'])
         ->name('google.auth');
-
-    Route::get('/google/callback', [GoogleDriveController::class, 'callback'])
-        ->name('google.callback');
-    Route::get('/test-upload', function () {
-        return '
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Test Upload Google Drive</title>
-    </head>
-    <body style="font-family:Arial;padding:40px">
-
-        <h2>Test Upload Google Drive</h2>
-
-        <form action="/test-upload"
-              method="POST"
-              enctype="multipart/form-data">
-
-            '.csrf_field().'
-
-            <input type="file" name="file">
-
-            <br><br>
-
-            <button type="submit">
-                Upload
-            </button>
-
-        </form>
-
-    </body>
-    </html>
-    ';
-    });
-
-    Route::post('/test-upload', function (
-        Request $request,
-        GoogleDriveService $drive
-    ) {
-
-        $request->validate([
-            'file' => 'required|file',
-        ]);
-
-        return $drive->upload(
-            $request->file('file')
-        );
-
-    });
+    Route::resource('surat-keputusan', SuratKeputusanController::class);
+    Route::get('surat-keputusan/{suratKeputusan}/download', [SuratKeputusanController::class, 'download'])->name('surat-keputusan.download');
+    Route::get('/disposii/{disposisi}/cetak-docx', [DisposisiController::class, 'cetakDocx'])->name('disposisi.cetak');
 });

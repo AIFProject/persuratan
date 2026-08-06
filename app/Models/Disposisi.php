@@ -9,8 +9,13 @@ class Disposisi extends model {
 
     protected $table = 'disposisi';
     protected $fillable = [
-        'surat_masuk_id', 'tujuan_disposisi', 'isi_disposisi',
-        'tanggal_disposisi', 'status',
+        'surat_masuk_id', 
+        'tujuan_disposisi', 
+        'isi_disposisi',
+        'catatan',
+        'tanggal_disposisi',
+        'sifat_surat', 
+        'status',
     ];
 
     protected $casts = [

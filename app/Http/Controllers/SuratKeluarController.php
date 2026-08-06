@@ -47,7 +47,8 @@ class SuratKeluarController extends Controller
         if ($request->hasFile('file_surat')) {
 
             $driveFile = $this->googleDriveService->upload(
-                $request->file('file_surat')
+                $request->file('file_surat'),
+                config('services.google_drive.surat_keluar_folder')
             );
 
             $data['file_surat'] = $driveFile->getName();
@@ -85,7 +86,8 @@ class SuratKeluarController extends Controller
             }
 
             $driveFile = $this->googleDriveService->upload(
-                $request->file('file_surat')
+                $request->file('file_surat'),
+                config('services.google_drive.surat_keluar_folder')
             );
 
             $data['file_surat'] = $driveFile->getName();

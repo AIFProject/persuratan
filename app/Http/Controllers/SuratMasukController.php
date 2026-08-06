@@ -6,7 +6,6 @@ use App\Http\Requests\SuratMasukRequest;
 use App\Models\SuratMasuk;
 use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SuratMasukController extends Controller
 {
@@ -48,7 +47,8 @@ class SuratMasukController extends Controller
         if ($request->hasFile('file_surat')) {
 
             $driveFile = $this->googleDriveService->upload(
-                $request->file('file_surat')
+                $request->file('file_surat'),
+                config('services.google_drive.surat_masuk_folder')
             );
 
             $data['file_surat'] = $driveFile->getName();
@@ -81,21 +81,27 @@ class SuratMasukController extends Controller
 
         if ($request->hasFile('file_surat')) {
 
-            if ($suratMasuk->file_surat) {
-                Storage::disk('public')
-                    ->delete($suratMasuk->file_surat);
+            if ($suratMasuk->google_drive_id) {
+                $this->googleDriveService->delete(
+                    $suratMasuk->google_drive_id
+                );
             }
 
-            $data['file_surat'] = $request
-                ->file('file_surat')
-                ->store('surat_masuk', 'public');
+            $driveFile = $this->googleDriveService->upload(
+                $request->file('file_surat'),
+                config('services.google_drive.surat_masuk_folder')
+            );
+
+            $data['file_surat'] = $driveFile->getName();
+            $data['google_drive_id'] = $driveFile->getId();
+            $data['google_drive_url'] = $driveFile->getWebViewLink();
         }
 
         $suratMasuk->update($data);
 
         return redirect()
             ->route('surat-masuk.index')
-            ->with('success', 'Surat masuk berhasil diperbarui.');
+            ->with('success', 'Surat keluar berhasil diperbarui.');
     }
 
     public function destroy(SuratMasuk $suratMasuk)
@@ -111,6 +117,7 @@ class SuratMasukController extends Controller
             }
 
             $suratMasuk->delete();
+
             return redirect()
                 ->route('surat-masuk.index')
                 ->with('success', 'Surat masuk berhasil dihapus');

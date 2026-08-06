@@ -46,12 +46,12 @@ class GoogleDriveService
         return $this->drive;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file, string $folderId)
     {
         $metadata = new DriveFile([
             'name' => time().'_'.$file->getClientOriginalName(),
             'parents' => [
-                env('GOOGLE_DRIVE_FOLDER_ID'),
+                $folderId,
             ],
         ]);
 
@@ -65,13 +65,9 @@ class GoogleDriveService
             ]
         );
 
-        $this->makePublic(
-            $uploaded->getId()
-        );
+        $this->makePublic($uploaded->getId());
 
-        return $this->getFile(
-            $uploaded->getId()
-        );
+        return $this->getFile($uploaded->getId());
     }
 
     public function makePublic(string $fileId): void

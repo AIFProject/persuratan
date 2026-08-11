@@ -12,10 +12,10 @@ class Disposisi extends model {
         'surat_masuk_id', 
         'tujuan_disposisi', 
         'isi_disposisi',
-        'catatan',
         'tanggal_disposisi',
         'sifat_surat', 
         'status',
+        'catatan',
     ];
 
     protected $casts = [

@@ -4,50 +4,98 @@
     <li class="breadcrumb-item active">Dashboard</li>
 @endsection
 @section('content')
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body">
-                    <a href="{{ route('surat-masuk.index') }}"
-                        class="nav-link {{ request()->routeIs('surat-masuk.index') ? 'active' : '' }}">
-                        <h5 class="card-title">
-                            <i class="bi bi-envelope"></i> Surat Masuk
-                        </h5>
-                        <p class="card-text display-4">
-                            {{ $totalMasuk }}
-                        </p>
-                    </a>
+    <div class="dashboard-overview mb-4">
+        <div class="overview-decoration overview-decoration-1"></div>
+        <div class="overview-decoration overview-decoration-2"></div>
+
+        <div class="overview-header">
+            <div class="overview-welcome">
+                <h2>Selamat Datang Kembali, Admin</h2>
+                <p>Berikut ringkasan aktivitas sistem persuratan hari ini</p>
+            </div>
+            <div class="overview-actions">
+                <div class="overview-date">
+                    <i class="bi bi-calendar"></i>
+                    {{ now()->translatedFormat('l, d F Y') }}
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <a href="{{ route('surat-keluar.index') }}"
-                        class="nav-link {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}">
-                        <h5 class="card-title">
-                            <i class="bi bi-send"></i> Surat Keluar
-                        </h5>
-                        <p class="card-text display-4">
-                            {{ $totalKeluar }}
-                        </p>
-                    </a>
-                </div>
+        <div class="row g-3">
+            <div class="col-12 col-sm-6 col-xl-3">
+                <a href="{{ route('surat-masuk.index') }}" class="dashboard-stat-link">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="bi bi-inbox"></i>
+                            </div>
+                            <span class="stat-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Surat Masuk</span>
+                            <h3>{{ $totalMasuk }}</h3>
+                            <small>Total surat masuk</small>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-body">
-                    <a href="{{ route('disposisi.index') }}"
-                        class="nav-link {{ request()->routeIs('disposisi.*') ? 'active' : '' }}">
-                        <h5 class="card-title">
-                            <i class="bi bi-arrow-left-right"></i> Disposisi
-                        </h5>
-                        <p class="card-text display-4">
-                            {{ $totalDisposisi }}
-                        </p>
-                    </a>
-                </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <a href="{{ route('surat-keluar.index') }}" class="dashboard-stat-link">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="bi bi-send"></i>
+                            </div>
+                            <span class="stat-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Surat Keluar</span>
+                            <h3>{{ $totalKeluar }}</h3>
+                            <small>Total surat keluar</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <a href="{{ route('disposisi.index') }}" class="dashboard-stat-link">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="bi bi-diagram-3"></i>
+                            </div>
+                            <span class="stat-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Disposisi</span>
+                            <h3>{{ $totalDisposisi }}</h3>
+                            <small>Total disposisi</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <a href="{{ route('surat-keputusan.index') }}" class="dashboard-stat-link">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="bi bi-file-earmark-check"></i>
+                            </div>
+                            <span class="stat-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Surat Keputusan</span>
+                            <h3>{{ $totalSK }}</h3>
+                            <small>Total surat keputusan</small>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -98,5 +146,4 @@
             </div>
         </div>
     </div>
-
 @endsection

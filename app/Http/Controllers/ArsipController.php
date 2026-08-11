@@ -48,7 +48,7 @@ class ArsipController extends Controller
                 tanggal_surat as tanggal,
                 tujuan as asal_tujuan,
                 perihal,
-                file_surat,
+                NULL as file_surat,
                 'keluar' as jenis
             ")
             ->when($filters['nomor_surat'] ?? null, function ($q, $val) {

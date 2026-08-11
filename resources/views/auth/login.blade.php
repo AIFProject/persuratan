@@ -2,184 +2,189 @@
 @section('title', 'Login')
 @section('content')
     <div class="login-page">
-        <!-- ==========================
-                HERO SECTION
-        =========================== -->
-        <div class="login-hero">
-            <div class="hero-grid"></div>
-            <div class="hero-content">
-                <div class="hero-header">
-                    <img src="{{ asset('logo-mtsn.png') }}" alt="Logo MTsN" class="hero-logo">
-                    <div>
-                        <small class="hero-subtitle">
-                            KEMENTERIAN AGAMA REPUBLIK INDONESIA
+        <div class="login-background">
+            <div class="login-overlay"></div>
+
+            <div class="login-circle login-circle-1"></div>
+            <div class="login-circle login-circle-2"></div>
+        </div>
+        <div class="login-container">
+            <div class="login-brand">
+                <div class="brand-content">
+                    <div class="brand-logo">
+                        <img src="{{ asset('logo-mtsn.png') }}" alt="Logo MTsN 1 Banyuwangi">
+                    </div>
+                    <div class="brand-title">
+                        <small>
+                            KEMENTRIAN AGAMA KABUPATEN BANYUWANGI
                         </small>
-                        <h2>
-                            MTsN 1 Banyuwangi
-                        </h2>
+                        <h1>MTsN 1 <br>Banyuwangi</h1>
                     </div>
-                </div>
-                <div class="hero-body">
-                    <span class="hero-label">
-                        SISTEM INFORMASI PERSURATAN
-                    </span>
-                    <h1>
-                        Administrasi Surat
-                        <br>
-                        <span>Terintegrasi.</span>
-                    </h1>
-                    <p>
-                        Sistem Informasi Persuratan MTsN 1 Banyuwangi
-                        digunakan untuk mengelola surat masuk,
-                        surat keluar, disposisi, serta arsip digital
-                        secara tertib, aman, dan terdokumentasi
-                        guna mendukung pelayanan administrasi madrasah.
-                    </p>
-                </div>
-                <div class="hero-feature">
-                    <div class="feature-item">
+                    <div class="brand-divider"></div>
+                    <div class="brand-system">
+                        <small>SISTEM INFORMASI</small>
+                        <h2>PERSURATAN</h2>
+                        <p>Kelola surat masuk, surat keluar,
+                            disposisi, dan arsip digital
+                            secara terintegrasi.
+                        </p>
+                    </div>
+                    <div class="brand-info">
                         <span class="material-symbols-outlined">
-                            inbox
+                            account_balance
                         </span>
                         <div>
-                            <strong>Surat Masuk</strong>
-                            <small>
-                                Pencatatan dan penerimaan surat masuk.
-                            </small>
+                            <strong>Administrasi Digital</strong>
+                            <small>Sistem Persuratan MTsN 1 Banyuwangi</small>
                         </div>
                     </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined">
-                            outgoing_mail
-                        </span>
-                        <div>
-                            <strong>Surat Keluar</strong>
-                            <small>
-                                Pembuatan dan distribusi surat keluar.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined">
-                            assignment
-                        </span>
-                        <div>
-                            <strong>Disposisi</strong>
-                            <small>
-                                Penerusan dan tindak lanjut surat.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined">
-                            folder_managed
-                        </span>
-                        <div>
-                            <strong>Arsip Digital</strong>
-                            <small>
-                                Penyimpanan dokumen secara elektronik.
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-footer">
-                    © {{ date('Y') }} MTsN 1 Banyuwangi
-                    <br>
-                    <small>
-                        Sistem Informasi Persuratan
-                    </small>
                 </div>
             </div>
-            <div class="hero-watermark">
-                <img src="{{ asset('logo-mtsn.png') }}" alt="Watermark">
-            </div>
-        </div>
-        <!-- ==========================
-                            LOGIN SECTION
-                    =========================== -->
-        <div class="login-panel">
-            <div class="login-card">
-                <div class="mobile-logo">
-                    <img src="{{ asset('logo-mtsn.png') }}" alt="Logo">
-                </div>
-                <small class="login-tag">
-                    SIGN IN
-                </small>
-                <h2>
-                    Selamat
-                    <span>Datang.</span>
-                </h2>
-                <p class="login-description">
-                    Masukkan email dan password
-                    untuk melanjutkan.
-                </p>
-                @if(session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
+            <div class="login-form-wrapper">
+                <div class="login-form-card">
+                    <div class="mobile-login-logo">
+                        <img src="{{ asset('logo-mtsn.png') }}" alt="Logo MTsN">
                     </div>
-                @endif
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <!-- EMAIL -->
-                    <div class="form-group">
-                        <label>
-                            Email
-                        </label>
-                        <div class="input-group">
+                    <div class="login-header">
+                        <small>SIGN IN</small>
+                        <h2>Selamat Datang</h2>
+                        <p>Masuk ke sistem persuratan
+                            untuk melanjutkan
+                        </p>
+                    </div>
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="login-alert">
                             <span class="material-symbols-outlined">
-                                mail
+                                error
                             </span>
-                            <input type="email" name="email" value="{{ old('email') }}"
-                                class="form-control @error('email') is-invalid @enderror" placeholder="nama@email.com"
-                                required autofocus>
-                        </div>
-                        @error('email')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
+                            <div>
+                                <strong>Login gagal</strong>
+                                <small>Periksa kembali email dan password anda.</small>
                             </div>
-                        @enderror
-                    </div>
-                    <!-- PASSWORD -->
-                    <div class="form-group">
-                        <div class="d-flex justify-content-between">
-                            <label>
-                                Password
-                            </label>
                         </div>
-                        <div class="input-group">
-                            <span class="material-symbols-outlined">
-                                lock
-                            </span>
-                            <input id="password" type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="••••••••"
-                                required>
-                            <button type="button" id="togglePassword" class="password-toggle">
+                    @endif
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        {{-- EMAIL --}}
+                        <div class="login-form-group">  
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <div class="login-input">
+
                                 <span class="material-symbols-outlined">
-                                    visibility
+                                    mail
                                 </span>
-                            </button>
-                        </div>
-                        @error('password')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
+
+                                <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                    placeholder="nama@email.com" class="@error('email') is-invalid @enderror" required
+                                    autofocus autocomplete="email">
+
                             </div>
-                        @enderror
-                    </div>
-                    <!-- REMEMBER -->
-                    <div class="login-option">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                            <label class="form-check-label" for="remember">
-                                Ingat Saya
-                            </label>
+
+                            @error('email')
+                                <small class="login-error">
+                                    {{ $message }}
+                                </small>
+                            @enderror
+
                         </div>
+
+
+                        {{-- PASSWORD --}}
+                        <div class="login-form-group">
+
+                            <div class="login-label-row">
+
+                                <label for="password">
+                                    Password
+                                </label>
+
+                            </div>
+
+                            <div class="login-input">
+
+                                <span class="material-symbols-outlined">
+                                    lock
+                                </span>
+
+                                <input id="password" type="password" name="password" placeholder="••••••••"
+                                    class="@error('password') is-invalid @enderror" required
+                                    autocomplete="current-password">
+
+                                <button type="button" id="togglePassword" class="password-toggle"
+                                    aria-label="Tampilkan password">
+                                    <span class="material-symbols-outlined">
+                                        visibility
+                                    </span>
+                                </button>
+
+                            </div>
+
+                            @error('password')
+                                <small class="login-error">
+                                    {{ $message }}
+                                </small>
+                            @enderror
+
+                        </div>
+
+
+                        {{-- REMEMBER --}}
+                        <div class="login-options">
+
+                            <label class="remember-option">
+
+                                <input type="checkbox" name="remember" id="remember">
+
+                                <span>
+                                    Ingat Saya
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        {{-- BUTTON --}}
+                        <button type="submit" class="login-submit" id="loginButton">
+
+                            <span>
+                                MASUK
+                            </span>
+
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
+
+                        </button>
+
+                    </form>
+
+
+                    {{-- Footer --}}
+                    <div class="login-footer">
+
+                        <span>
+                            © {{ date('Y') }} MTsN 1 Banyuwangi
+                        </span>
+
+                        <span>
+                            Sistem Informasi Persuratan
+                        </span>
+
                     </div>
-                    <!-- BUTTON -->
-                    <button type="submit" class="btn-login" id="loginButton">
-                        MASUK
-                    </button>
-                </form>
+
+                </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

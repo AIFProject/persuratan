@@ -5,36 +5,40 @@
 @endsection
 @section('content')
     <div class="container-fluid">
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h3 class="fw-bold mb-1">
-                    <i class="bi bi-file-earmark-text-fill text-primary me-2"></i>
-                    Laporan Surat
-                </h3>
-                <p class="text-secondary mb-0">
-                    Cetak laporan surat masuk dan surat keluar berdasarkan rentang tanggal.
-                </p>
+        {{-- Header & Statistik Laporan --}}
+        <div class="surat-overview mb-4">
+            {{-- Dekorasi --}}
+            <div class="surat-overview-decoration surat-overview-decoration-1"></div>
+            <div class="surat-overview-decoration surat-overview-decoration-2"></div>
+            {{-- Header --}}
+            <div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1 text-white">
+                        <i class="bi bi-file-earmark-text-fill me-2"></i>
+                        Laporan Surat
+                    </h3>
+                    <p class="mb-0 text-white-50">
+                        Cetak laporan surat masuk dan surat keluar
+                        berdasarkan rentang tanggal.
+                    </p>
+                </div>
             </div>
-        </div>
-        <!-- Statistik -->
-        <div class="row mb-4">
-            <div class="col-lg-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body d-flex align-items-center">
-                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
-                            style="width:60px;height:60px;">
-                            <span class="material-symbols-outlined">
-                                description
-                            </span>
+            {{-- Statistik --}}
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="surat-stat-card">
+                        <div class="surat-stat-icon">
+                            <i class="bi bi-file-earmark-pdf"></i>
                         </div>
-                        <div class="ms-3">
-                            <small class="text-secondary">
-                                Modul Laporan
-                            </small>
-                            <h4 class="fw-bold mb-0">
+                        <div>
+                            <small>Modul Laporan</small>
+                            <h3>
                                 Cetak Laporan PDF
-                            </h4>
+                            </h3>
+                            <span>
+                                Buat dan cetak laporan surat masuk dan surat keluar
+                                berdasarkan rentang tanggal.
+                            </span>
                         </div>
                     </div>
                 </div>

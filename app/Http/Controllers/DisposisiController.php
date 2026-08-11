@@ -42,7 +42,9 @@ class DisposisiController extends Controller
 
         $data['tujuan_disposisi'] = implode(',', $request->tujuan_disposisi ?? []);
         $data['isi_disposisi'] = implode(',', $request->isi_disposisi ?? []);
+        $data['lain1_text'] = $request->lain1_text;
         Disposisi::create($data);
+
         return redirect()
             ->route('disposisi.index')
             ->with('success', 'Disposisi berhasil ditambahkan.');
@@ -67,8 +69,10 @@ class DisposisiController extends Controller
         $data = $request->validated();
         $data['tujuan_disposisi'] = implode(',', $request->tujuan_disposisi ?? []);
         $data['isi_disposisi'] = implode(',', $request->isi_disposisi ?? []);
+        $data['lain1_text'] = $request->lain1_text;
 
         $disposisi->update($data);
+
         return redirect()
             ->route('disposisi.index')
             ->with('success', 'Disposisi berhasil diperbarui.');
@@ -97,15 +101,15 @@ class DisposisiController extends Controller
 
         $template->setValue('surat_dari', $surat->pengirim);
         $template->setValue('nomor_surat', $surat->nomor_surat);
-        $template->setValue('tanggal_surat',$surat->tanggal_surat->format('d/m/Y'));
+        $template->setValue('tanggal_surat', $surat->tanggal_surat->format('d/m/Y'));
         $template->setValue('tanggal_diterima', $surat->tanggal_diterima->format('d/m/Y'));
         $template->setValue('perihal', $surat->perihal);
-        $template->setValue('sifat', $disposisi->sifat_surat);
-        $template->setValue('sangat_segera', $surat->sifat_surat == 'Sangat Segera' ? '☑': '☐');
-        $template->setValue('segera', $surat->sifat_surat == 'Segera' ? '☑': '☐');
-        $template->setValue('rahasia', $surat->sifat_surat == 'Rahasia' ? '☑': '☐');
+        $sifat_surat = explode(',', $disposisi->sifat_surat);
+        $template->setValue('sangat_segera', in_array('Sangat Segera', $sifat_surat) ? '☑' : '☐');
+        $template->setValue('segera', in_array('Segera', $sifat_surat) ? '☑' : '☐');
+        $template->setValue('rahasia', in_array('Rahasia', $sifat_surat) ? '☑' : '☐');
         $template->setValue('nomor_agenda', '-');
-        $template->setValue('catatan', $dsiposisi->catatan ?? '-');
+        $template->setValue('catatan', $disposisi->catatan ?? '-');
 
         // ========TUJUAN DISPOSISI============
         $tujuan = explode(',', $disposisi->tujuan_disposisi);
@@ -115,23 +119,23 @@ class DisposisiController extends Controller
         $template->setValue('waka_kesiswaan', in_array('Wakil Kepala Bidang Kesiswaan', $tujuan) ? '☑' : '☐');
         $template->setValue('waka_humas', in_array('Wakil Kepala Bidang Hubungan Masyarakat', $tujuan) ? '☑' : '☐');
         $template->setValue('waka_sarpras', in_array('Wakil Kepala Bidang Sarana Prasarana', $tujuan) ? '☑' : '☐');
-        $template->setValue('wali_kelas', in_array('Wali Kelas', $tujuan) ? '☑' : '☐');
-        $template->setValue('panitia', '-');
+        $template->setValue('wali_kelas', in_array('Wali Kelas / Guru BK / Panitia', $tujuan) ? '☑' : '☐');
         // =========ISI========================
-        $isi = explode(',', $disposisi->isi_disposis);
+        $isi = array_map('trim', explode(',', $disposisi->isi_disposisi ?? ''));
         $template->setValue('tanggapan', in_array('Tanggapan dan Saran', $isi) ? '☑' : '☐');
         $template->setValue('proses', in_array('Proses Lebih Lanjut', $isi) ? '☑' : '☐');
         $template->setValue('koordinasi', in_array('Koordinasi / Konfirmasikan', $isi) ? '☑' : '☐');
-        $template->setValue('lain1', '☐');
-        $template->setValue('lain2', '☐');
+        $template->setValue('lain1', in_array('lain1', $isi) ? '☑' : '☐');
+        $template->setValue('lain1_text', $disposisi->catatan ?? '');
         // ========SIMPAN & dOWNLOAD============
         $folder = storage_path('app/temp');
-        if (!file_exists($folder)) {
+        if (! file_exists($folder)) {
             mkdir($folder, 0777, true);
         }
-        $filename = 'Disposisi-' . $disposisi->id . '.docx';
-        $path = $folder . '/' . $filename;
+        $filename = 'Disposisi-'.$disposisi->id.'.docx';
+        $path = $folder.'/'.$filename;
         $template->saveAs($path);
+
         return response()->download($path)->deleteFileAfterSend(true);
     }
 }

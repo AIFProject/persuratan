@@ -20,8 +20,6 @@ class SuratKeluarRequest extends FormRequest
             'tanggal_surat' => 'required|date',
             'tujuan' => 'required|string|max:255',
             'perihal' => 'required|string|max:255',
-            // 'sifat_surat' => 'required|string|max:50',
-            'file_surat' => 'nullable|file|mimes:pdf|max:5120',
             'keterangan' => 'nullable|string',
         ];
     }

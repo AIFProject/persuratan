@@ -117,17 +117,26 @@ class SuratKeputusanController extends Controller
 
     public function destroy(SuratKeputusan $suratKeputusan)
     {
-        if ($suratKeputusan->google_drive_id) {
-            $this->driveService->delete(
-                $suratKeputusan->google_drive_id
-            );
+        try {
+
+            if ($suratKeputusan->google_drive_id) {
+                $this->driveService->delete(
+                    $suratKeputusan->google_drive_id
+                );
+            }
+
+            $suratKeputusan->delete();
+
+            return redirect()
+                ->route('surat-keputusan.index')
+                ->with('success', 'Surat keluar berhasil dihapus.');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->route('surat-keputusan.index')
+                ->with('error', 'Gagal menghapus surat: '.$e->getMessage());
         }
-
-        $suratKeputusan->delete();
-
-        return redirect()
-            ->route('surat-keputusan.index')
-            ->with('success', 'Surat Keputusan berhasil dihapus.');
     }
 
     public function download(SuratKeputusan $suratKeputusan)

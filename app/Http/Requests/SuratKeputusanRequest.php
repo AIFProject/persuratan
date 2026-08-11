@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SuratKeputusanRequest extends FormRequest
 {
@@ -23,18 +24,23 @@ class SuratKeputusanRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('surat_keputusan');
+        $suratKeputusan = $this->route('surat_keputusan');
+
+        $id = is_object($suratKeputusan)
+            ? $suratKeputusan->id
+            : $suratKeputusan;
 
         return [
-            'nomor_sk' => 'required|string|max:255|unique:surat_keputusan,nomor_sk' . $id,
-            'nama_sk' =>'required|string|max:255',
-            'tanggal' =>'required|string|max:255',
-            'perihal' => 'required|string|max:255',
-            'file_sk' => 'nullable|mimes:pdf|max:5120'
+            'nomor_sk' => ['required', 'string', 'max:255', Rule::unique('surat_keputusan', 'nomor_sk')->ignore($id)],
+            'nama_sk' => ['required', 'string', 'max:255'],
+            'tanggal' => ['required', 'date'],
+            'perihal' => ['required', 'string', 'max:255'],
+            'file_sk' => ['nullable', 'mimes:pdf', 'max:5120'],
         ];
     }
 
-    public function messages():array {
+    public function messages(): array
+    {
         return [
             'nomor_sk.required' => 'Nomor SK wajib diisi.',
             'nomor_sk.unique' => 'Nomor SK sudah digunakan.',

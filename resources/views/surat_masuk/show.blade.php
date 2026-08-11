@@ -11,8 +11,14 @@
             <div>
                 <a href="{{ route('surat-masuk.edit', $suratMasuk->id) }}" class="btn btn-warning btn-sm"><i
                         class="bi bi-pencil"></i> Edit</a>
-                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-                        class="bi bi-trash"></i> Hapus</button>
+                <form action="{{ route('surat-masuk.destroy', $suratMasuk->id) }}" method="POST"
+                    class="delete-form d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" data-nomor="{{ $suratMasuk->nomor_surat }}">
+                        <i class="bi bi-trash"></i> Hapus
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body">
@@ -61,23 +67,73 @@
             </table>
         </div>
     </div>
-    <!-- Modal Hapus (sama seperti di index) -->
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">Yakin ingin menghapus surat ini?</div>
-                <div class="modal-footer">
-                    <form action="{{ route('surat-masuk.destroy', $suratMasuk->id) }}" method="POST">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.delete-form').forEach(form => {
+
+                form.addEventListener('submit', function (e) {
+
+                    e.preventDefault();
+
+                    const button = this.querySelector('button');
+                    const nomor = button.dataset.nomor;
+
+                    Swal.fire({
+                        title: 'Hapus Surat?',
+                        html: `
+                            <p>
+                                Surat <strong>${nomor}</strong> akan dihapus.
+                            </p>
+
+                            <p class="text-danger mb-0">
+                                Data yang dihapus tidak dapat dikembalikan.
+                            </p>
+                        `,
+                        icon: 'warning',
+
+                        showCancelButton: true,
+
+                        confirmButtonText: 'Hapus',
+                        cancelButtonText: 'Batal',
+
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+
+                        reverseButtons: true
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            // Loading setelah klik "Hapus"
+                            Swal.fire({
+                                title: 'Menghapus surat...',
+                                text: 'Mohon tunggu sebentar.',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+
+                            // Cegah double click
+                            button.disabled = true;
+
+                            // Jalankan DELETE Laravel
+                            form.submit();
+                        }
+
+                    });
+
+                });
+
+            });
+
+        });
+    </script>
+@endpush

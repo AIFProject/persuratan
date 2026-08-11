@@ -21,6 +21,7 @@ class DisposisiRequest extends FormRequest
 
             'isi_disposisi' => 'required|array',
             'isi_disposisi.*' => 'string',
+            'lain1_text' => 'nullable|string',
             'tanggal_disposisi' => 'required|date',
             'catatan' => 'nullable|string',
             'status' => 'required|in:Belum Diproses,Diproses,Selesai',

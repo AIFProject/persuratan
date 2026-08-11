@@ -6,53 +6,51 @@
 @section('content')
     <div class="container-fluid">
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h3 class="fw-bold mb-1">
-                    <i class="bi bi-envelope-paper-fill text-primary me-2"></i>
-                    Surat Masuk
-                </h3>
-                <p class="text-secondary mb-0">
-                    Kelola seluruh data surat masuk MTsN 1 Banyuwangi.
-                </p>
+        <div class="surat-overview mb-4">
+            <div class="surat-overview-decoration surat-overview-decoration-1"></div>
+            <div class="surat-overview-decoration surat-overview-decoration-2"></div>
+
+            <div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1 text-white">
+                        <i class="bi bi-envelope-paper-fill me-2"></i>
+                        Surat Masuk
+                    </h3>
+                    <p class="mb-0 text-white-50">
+                        Kelola seluruh data surat masuk
+                        PSTP MTsN 1 Banyuwangi.
+                    </p>
+                </div>
+                <a href="{{ route('surat-masuk.create') }}" class="btn btn-light px-4 fw-semibold flex-shrink-0">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Tambah Surat
+                </a>
             </div>
-            <a href="{{ route('surat-masuk.create') }}" class="btn btn-primary px-4">
-                <i class="bi bi-plus-circle me-2"></i>
-                Tambah Surat
-            </a>
-        </div>
-        <!-- Statistik -->
-        <div class="row mb-4">
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body d-flex align-items-center">
-                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
-                            style="width:60px;height:60px;">
-                            <span class="material-symbols-outlined">mail</span>
+            <div class="row g-3">
+                <div class="col-12 col-lg-4">
+                    <div class="surat-stat-card">
+                        <div class="surat-stat-icon">
+                            <i class="bi bi-envelope"></i>
                         </div>
-                        <div class="ms-3">
-                            <small class="text-secondary">
-                                Total Surat
-                            </small>
-                            <h3 class="fw-bold mb-0">
-                                {{ $suratMasuk->total() }}
-                            </h3>
+                        <div>
+                            <small>Total Surat</small>
+                            <h3>{{ $suratMasuk->total() }}</h3>
+                            <span>Surat masuk terdaftar</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <form method="GET">
+                <div class="col-12 col-lg-8">
+                    <div class="surat-search-card">
+                        <form method="get">
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">
+                                <span class="input-group-text">
                                     <i class="bi bi-search"></i>
                                 </span>
-                                <input type="text" class="form-control border-start-0 ps-0" name="search"
+                                <input type="text" name="search" class="form-control"
                                     placeholder="Cari nomor surat, pengirim atau perihal..."
                                     value="{{ request('search') }}">
-                                <button class="btn btn-primary">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="bi bi-search me-1"></i>
                                     Cari
                                 </button>
                             </div>
@@ -221,33 +219,72 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
             document.querySelectorAll('.delete-form').forEach(form => {
+
                 form.addEventListener('submit', function (e) {
+
                     e.preventDefault();
+
                     const button = this.querySelector('button');
                     const nomor = button.dataset.nomor;
+
                     Swal.fire({
                         title: 'Hapus Surat?',
                         html: `
-                                    <p>Surat <strong>${nomor}</strong> akan dihapus.</p>
-                                    <p class="text-danger mb-0">
-                                        Data yang dihapus tidak dapat dikembalikan.
-                                    </p>
-                                `,
+                                                <p>
+                                                    Surat <strong>${nomor}</strong> akan dihapus.
+                                                </p>
+
+                                                <p class="text-danger mb-0">
+                                                    Data yang dihapus tidak dapat dikembalikan.
+                                                </p>
+                                            `,
                         icon: 'warning',
+
                         showCancelButton: true,
-                        confirmButtonText: 'Ya, Hapus',
+
+                        confirmButtonText: 'Hapus',
                         cancelButtonText: 'Batal',
+
                         confirmButtonColor: '#dc3545',
                         cancelButtonColor: '#6c757d',
+
                         reverseButtons: true
+
                     }).then((result) => {
+
                         if (result.isConfirmed) {
+
+                            // =====================================
+                            // TAMPILKAN LOADING BARU
+                            // =====================================
+
+                            Swal.fire({
+                                title: 'Menghapus surat...',
+                                text: 'Mohon tunggu sebentar.',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+
+                            // Cegah double click
+                            button.disabled = true;
+
+                            // Jalankan DELETE
                             form.submit();
                         }
+
                     });
+
                 });
+
             });
+
         });
     </script>
 @endpush

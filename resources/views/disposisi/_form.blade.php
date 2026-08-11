@@ -131,6 +131,26 @@
             </label>
         </div>
     @endforeach
+    
+    <div class="form-check mb-2">
+        <input
+            class="form-check-input" 
+            type="checkbox" 
+            name="isi_disposisi[]"
+            value="lain1"
+            id="lain1"
+            {{ in_array('lain1', $isi) ? 'checked' : '' }}>
+        
+        <label for="lain1" class="form-check-label">
+            Lain-lain
+        </label>
+    </div>
+    <input
+    type="text"
+    name="lain1_text"
+    class="form-control mt-2"
+    placeholder="Isi keterangan lain-lain"
+    value="{{ old('lain1_text', $disposisi->lain1_text ?? '') }}">
 </div>
 
 <div class="mb-3">

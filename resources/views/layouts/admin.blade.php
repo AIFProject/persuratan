@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,14 +42,17 @@
             --transition:
                 .3s cubic-bezier(.4, 0, .2, 1);
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--background);
@@ -56,14 +60,17 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+
         a {
             text-decoration: none;
         }
+
         ul {
             margin: 0;
             padding: 0;
             list-style: none;
         }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -84,6 +91,7 @@
             transition:
                 width var(--transition);
         }
+
         .brand {
             min-height: 110px;
             padding: 24px;
@@ -93,6 +101,7 @@
             border-bottom:
                 1px solid rgba(255, 255, 255, .10);
         }
+
         .brand-logo {
             width: 54px;
             height: 54px;
@@ -105,14 +114,17 @@
             background: rgba(255, 255, 255, .18);
             backdrop-filter: blur(10px);
         }
+
         .brand-logo .material-symbols-outlined {
             font-size: 28px;
         }
+
         .brand-text {
             min-width: 0;
             flex: 1;
             overflow: hidden;
         }
+
         .brand-text small {
             display: block;
             color: #fff;
@@ -122,6 +134,7 @@
             text-transform: uppercase;
             white-space: nowrap;
         }
+
         .brand-text h4 {
             margin: 4px 0 0;
             color: #fff;
@@ -129,6 +142,7 @@
             font-weight: 700;
             white-space: nowrap;
         }
+
         .sidebar-collapse-btn {
             display: none;
             width: 42px;
@@ -148,21 +162,26 @@
             border-color: var(--primary);
             background: var(--primary-soft);
         }
+
         .menu {
             flex: 1;
             padding: 24px 18px;
             overflow-y: auto;
         }
+
         .menu::-webkit-scrollbar {
             width: 5px;
         }
+
         .menu::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .menu::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, .15);
             border-radius: 50px;
         }
+
         .menu-title {
             padding-left: 16px;
             margin-bottom: 16px;
@@ -172,14 +191,17 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
+
         .sidebar .nav {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
+
         .sidebar .nav-item {
             width: 100%;
         }
+
         .sidebar .nav-link {
             position: relative;
             display: flex;
@@ -194,6 +216,7 @@
             transition: var(--transition);
             overflow: hidden;
         }
+
         .sidebar .nav-link .material-symbols-outlined {
             width: 42px;
             height: 42px;
@@ -206,29 +229,35 @@
             font-size: 22px;
             transition: var(--transition);
         }
+
         .sidebar .nav-link p {
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .sidebar .nav-link:hover {
             color: #fff;
             background: rgba(255, 255, 255, .09);
             transform: translateX(5px);
         }
+
         .sidebar .nav-link:hover .material-symbols-outlined {
             background: rgba(255, 255, 255, .12);
         }
+
         .sidebar .nav-link.active {
             color: #149614;
             background: #fff;
             box-shadow: 0 12px 30px rgba(27, 222, 27, .25);
         }
+
         .sidebar .nav-link.active .material-symbols-outlined {
             color: var(--primary);
             background: var(--primary-soft);
         }
+
         .sidebar .nav-link.active::before {
             content: "";
             position: absolute;
@@ -239,9 +268,11 @@
             border-radius: 20px;
             background: var(--primary);
         }
+
         .sidebar.collapsed {
             width: var(--sidebar-collapse);
         }
+
         .sidebar.collapsed .brand {
             min-height: 110px;
             flex-direction: column;
@@ -249,6 +280,7 @@
             padding: 18px 0;
             gap: 10px;
         }
+
         .sidebar.collapsed .brand-text,
         .sidebar.collapsed .menu-title,
         .sidebar.collapsed .nav-link p,
@@ -256,22 +288,28 @@
         .sidebar.collapsed .logout-btn span {
             display: none;
         }
+
         .sidebar.collapsed .brand-logo {
             order: 2;
         }
+
         .sidebar.collapsed .sidebar-collapse-btn {
             order: 1;
         }
+
         .sidebar.collapsed .nav-link {
             justify-content: center;
             padding: 10px;
         }
+
         .sidebar.collapsed .nav-link.active::before {
             display: none;
         }
+
         .sidebar.collapsed .nav-link:hover {
             transform: none;
         }
+
         .sidebar.collapsed .nav-link:hover::after {
             content: attr(data-title);
             position: absolute;
@@ -287,10 +325,12 @@
             white-space: nowrap;
             box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
         }
+
         .sidebar-footer {
             padding: 20px;
             border-top: 1px solid rgba(255, 255, 255, .10);
         }
+
         .profile {
             display: flex;
             align-items: center;
@@ -300,6 +340,7 @@
             border-radius: 18px;
             background: rgba(255, 255, 255, .06);
         }
+
         .profile-avatar {
             width: 50px;
             height: 50px;
@@ -313,9 +354,11 @@
             font-size: 18px;
             font-weight: 700;
         }
+
         .profile-info {
             min-width: 0;
         }
+
         .profile-info h6 {
             margin: 0;
             color: #fff;
@@ -325,9 +368,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .profile-info small {
             color: #d1e7d1;
         }
+
         .logout-btn {
             display: flex;
             align-items: center;
@@ -340,10 +385,12 @@
             background: rgba(239, 68, 68, .10);
             transition: var(--transition);
         }
+
         .logout-btn:hover {
             color: #fff;
             background: #ef4444;
         }
+
         .main-wrapper {
             position: relative;
             min-height: 100vh;
@@ -353,9 +400,11 @@
             overflow: hidden;
             transition: margin-left var(--transition);
         }
+
         .main-wrapper.expanded {
             margin-left: var(--sidebar-collapse);
         }
+
         .main-wrapper::before {
             content: "";
             position: absolute;
@@ -369,6 +418,7 @@
             filter: blur(10px);
             opacity: .08;
         }
+
         .topbar {
             position: sticky;
             top: 0;
@@ -382,24 +432,29 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(226, 232, 240, .8);
         }
+
         .topbar-left {
             display: flex;
             align-items: center;
             gap: 16px;
         }
+
         .topbar-title h4 {
             margin: 0;
             font-size: 22px;
             font-weight: 700;
         }
+
         .topbar-title small {
             color: var(--muted);
         }
+
         .topbar-right {
             display: flex;
             align-items: center;
             gap: 18px;
         }
+
         .mobile-menu-btn {
             width: 42px;
             height: 42px;
@@ -409,14 +464,17 @@
             padding: 0;
             border-radius: 12px;
         }
+
         .content {
             position: relative;
             z-index: 2;
             padding: 34px;
         }
+
         .content>.container-fluid {
             padding: 0;
         }
+
         .card {
             border: none;
             border-radius: 20px;
@@ -424,55 +482,69 @@
             overflow: hidden;
             transition: var(--transition);
         }
+
         .card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
         }
+
         .card-header {
             background: #fff;
             border-bottom: 1px solid var(--border);
             font-weight: 600;
         }
+
         .btn {
             border-radius: 12px;
             font-weight: 600;
         }
+
         .btn-primary {
             border: none;
             background: var(--primary);
         }
+
         .btn-primary:hover {
             background: var(--primary-dark);
         }
+
         .table {
             vertical-align: middle;
         }
+
         .table thead {
             background: #f8fafc;
         }
+
         .table thead th {
             border: none;
             color: #475569;
             font-weight: 600;
         }
+
         .alert {
             border: none;
             border-radius: 14px;
         }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 50px;
         }
+
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .nav-link {
             position: relative;
             overflow: hidden;
         }
+
         .ripple {
             position: absolute;
             width: 10px;
@@ -482,38 +554,47 @@
             transform: translate(-50%, -50%);
             animation: ripple .6s linear;
         }
+
         @keyframes ripple {
             from {
                 opacity: 1;
                 transform: translate(-50%, -50%) scale(0);
             }
+
             to {
                 opacity: 0;
                 transform: translate(-50%, -50%) scale(18);
             }
         }
+
         @media (max-width: 991.98px) {
             .sidebar {
                 width: var(--sidebar-width);
                 margin: 0;
                 box-shadow: 18px 0 45px rgba(15, 23, 42, .20);
             }
+
             .sidebar.collapsed {
                 width: var(--sidebar-width);
             }
+
             .main-wrapper,
             .main-wrapper.expanded {
                 margin-left: 0;
             }
+
             .mobile-menu-btn {
                 display: flex;
             }
+
             .topbar {
                 padding: 0 20px;
             }
+
             .content {
                 padding: 24px;
             }
+
             .sidebar.collapsed .brand {
                 min-height: 110px;
                 flex-direction: row;
@@ -521,6 +602,7 @@
                 padding: 24px;
                 gap: 16px;
             }
+
             .sidebar.collapsed .brand-text,
             .sidebar.collapsed .menu-title,
             .sidebar.collapsed .nav-link p,
@@ -528,43 +610,54 @@
             .sidebar.collapsed .logout-btn span {
                 display: block;
             }
+
             .sidebar.collapsed .brand-logo,
             .sidebar.collapsed .sidebar-collapse-btn {
                 order: initial;
             }
+
             .sidebar.collapsed .nav-link {
                 justify-content: flex-start;
                 padding: 10px 12px;
             }
+
             .sidebar.collapsed .nav-link:hover::after {
                 display: none;
             }
         }
+
         @media (max-width: 768px) {
             .topbar {
                 height: 64px;
                 padding: 0 16px;
             }
+
             .topbar-title h4 {
                 font-size: 18px;
             }
+
             .topbar-title small {
                 display: none;
             }
+
             .topbar-right {
                 gap: 10px;
             }
+
             .topbar-right>span {
                 display: none;
             }
+
             .content {
                 padding: 20px;
             }
         }
+
         @media (max-width: 480px) {
             .sidebar {
                 width: min(var(--sidebar-width), 88vw);
             }
+
             .content {
                 padding: 15px;
             }
@@ -573,6 +666,7 @@
                 padding: 0 14px;
             }
         }
+
         .global-loading {
             position: fixed;
             inset: 0;
@@ -587,11 +681,13 @@
             pointer-events: none;
             transition: opacity .2s ease, visibility .2s ease;
         }
+
         .global-loading.show {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
         }
+
         .loading-box {
             min-width: 180px;
             padding: 24px;
@@ -603,11 +699,13 @@
             background: #fff;
             box-shadow: 0 20px 50px rgba(0, 0, 0, .15);
         }
+
         .loading-text {
             color: var(--text);
             font-size: 14px;
             font-weight: 600;
         }
+
         .dashboard-overview {
             position: relative;
             overflow: hidden;
@@ -623,6 +721,7 @@
                 var(--shadow-lg);
             isolation: isolate;
         }
+
         .overview-decoration {
             position: absolute;
             z-index: -1;
@@ -630,6 +729,7 @@
             pointer-events: none;
             background: rgba(255, 255, 255, .06);
         }
+
         .overview-decoration-1 {
             width: 430px;
             height: 430px;
@@ -1121,545 +1221,177 @@
             background: var(--sidebar);
         }
     </style>
-
     @stack('styles')
-
 </head>
 
 <body>
-
-    <!-- =========================================================
-                        SIDEBAR
-        Desktop : fixed sidebar
-        Mobile  : Bootstrap Offcanvas
-    ========================================================== -->
-
     <aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-
-        <!-- =====================================================
-                            BRAND
-        ====================================================== -->
-
         <div class="brand">
-
             <div class="brand-logo">
                 <span class="material-symbols-outlined">
                     account_balance
                 </span>
             </div>
-
             <div class="brand-text">
-
-                <small>
-                    MTsN 1 Banyuwangi
-                </small>
-
-                <h4 id="sidebarLabel">
-                    Persuratan
-                </h4>
-
+                <small>MTsN 1 Banyuwangi</small>
+                <h4 id="sidebarLabel">Persuratan</h4>
             </div>
-
-
-            <!--
-                Tombol ini:
-                - Desktop : collapse sidebar
-                - Mobile  : tutup Offcanvas Bootstrap
-            -->
-
             <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn"
                 aria-label="Tutup atau kecilkan sidebar">
-
-                <span class="material-symbols-outlined">
-                    density_small
-                </span>
-
+                <span class="material-symbols-outlined">density_small</span>
             </button>
-
         </div>
-
-
-        <!-- =====================================================
-                            MENU
-        ====================================================== -->
-
         <div class="menu">
-
-            <div class="menu-title">
-                Menu Utama
-            </div>
-
-
+            <div class="menu-title">Menu Utama</div>
             <ul class="nav flex-column">
-
-
-                <!-- =========================
-                            DASHBOARD
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('dashboard') }}" class="nav-link
                         {{ request()->routeIs('dashboard') ? 'active' : '' }}" data-title="Dashboard">
-
-                        <span class="material-symbols-outlined">
-                            dashboard
-                        </span>
-
-                        <p>
-                            Dashboard
-                        </p>
-
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p>Dashboard</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            SURAT MASUK
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('surat-masuk.index') }}" class="nav-link
                         {{ request()->routeIs('surat-masuk.*') ? 'active' : '' }}" data-title="Surat Masuk">
-
-                        <span class="material-symbols-outlined">
-                            inbox
-                        </span>
-
-                        <p>
-                            Surat Masuk
-                        </p>
-
+                        <span class="material-symbols-outlined">inbox</span>
+                        <p>Surat Masuk</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            SURAT KELUAR
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('surat-keluar.index') }}" class="nav-link
                         {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}" data-title="Surat Keluar">
-
-                        <span class="material-symbols-outlined">
-                            send
-                        </span>
-
-                        <p>
-                            Surat Keluar
-                        </p>
-
+                        <span class="material-symbols-outlined">send</span>
+                        <p>Surat Keluar</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            SURAT KEPUTUSAN
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('surat-keputusan.index') }}" class="nav-link
                         {{ request()->routeIs('surat-keputusan.*') ? 'active' : '' }}" data-title="Surat Keputusan">
-
-                        <span class="material-symbols-outlined">
-                            gavel
-                        </span>
-
-                        <p>
-                            Surat Keputusan
-                        </p>
-
+                        <span class="material-symbols-outlined">gavel</span>
+                        <p>Surat Keputusan</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            DISPOSISI
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('disposisi.index') }}" class="nav-link
                         {{ request()->routeIs('disposisi.*') ? 'active' : '' }}" data-title="Disposisi">
-
-                        <span class="material-symbols-outlined">
-                            cycle
-                        </span>
-
-                        <p>
-                            Disposisi
-                        </p>
-
+                        <span class="material-symbols-outlined">cycle</span>
+                        <p>Disposisi</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            ARSIP
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('arsip.index') }}" class="nav-link
                         {{ request()->routeIs('arsip.*') ? 'active' : '' }}" data-title="Arsip">
-
-                        <span class="material-symbols-outlined">
-                            archive
-                        </span>
-
-                        <p>
-                            Arsip
-                        </p>
-
+                        <span class="material-symbols-outlined">archive</span>
+                        <p>Arsip</p>
                     </a>
-
                 </li>
-
-
-                <!-- =========================
-                            LAPORAN
-                ========================== -->
-
                 <li class="nav-item">
-
                     <a href="{{ route('laporan.index') }}" class="nav-link
                         {{ request()->routeIs('laporan.*') ? 'active' : '' }}" data-title="Laporan">
-
-                        <span class="material-symbols-outlined">
-                            bar_chart
-                        </span>
-
-                        <p>
-                            Laporan
-                        </p>
-
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <p>Laporan</p>
                     </a>
-
                 </li>
-
             </ul>
-
         </div>
-
-
-        <!-- =====================================================
-                        SIDEBAR FOOTER
-        ====================================================== -->
-
         <div class="sidebar-footer">
-
-
-            <!-- =========================
-                            PROFILE
-            ========================== -->
-
             <div class="profile">
-
                 <div class="profile-avatar">
-
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-
                 </div>
-
-
                 <div class="profile-info">
-
-                    <h6>
-                        {{ Auth::user()->name }}
-                    </h6>
-
-                    <small>
-                        Administrator
-                    </small>
-
+                    <h6>{{ Auth::user()->name }}</h6>
+                    <small>Administrator</small>
                 </div>
-
             </div>
-
-
-            <!-- =========================
-                            LOGOUT
-            ========================== -->
-
-            <a href="{{ route('logout') }}" class="logout-btn" onclick="
-                    event.preventDefault();
-                    document.getElementById('logout-form').submit();
-                ">
-
+            <a href="{{ route('logout') }}" class="logout-btn"
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="bi bi-box-arrow-right"></i>
-
-                <span>
-                    Logout
-                </span>
-
+                <span>Logout</span>
             </a>
-
-
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-
                 @csrf
-
             </form>
-
         </div>
-
     </aside>
-
-
-    <!-- =========================================================
-                        MAIN WRAPPER
-    ========================================================== -->
-
     <main class="main-wrapper" id="mainWrapper">
-
-
-        <!-- =====================================================
-                            TOPBAR
-        ====================================================== -->
-
         <header class="topbar">
-
-
-            <!-- =========================
-                        LEFT SIDE
-            ========================== -->
-
             <div class="topbar-left">
-
-
-                <!--
-                    MOBILE BURGER
-
-                    Bootstrap Offcanvas:
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#sidebar"
-                -->
-
                 <button type="button" class="btn btn-light border mobile-menu-btn" data-bs-toggle="offcanvas"
                     data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Buka menu">
-
-                    <span class="material-symbols-outlined">
-                        menu
-                    </span>
-
+                    <span class="material-symbols-outlined">menu</span>
                 </button>
-
-
-                <!-- =========================
-                            PAGE TITLE
-                ========================== -->
-
                 <div class="topbar-title">
-
-                    <h4>
-                        @yield('title', 'Dashboard')
-                    </h4>
-
-                    <small>
-                        Sistem Persuratan MTsN 1 Banyuwangi
-                    </small>
-
+                    <h4>@yield('title', 'Dashboard')</h4>
+                    <small>Sistem Persuratan PTSP MTsN 1 Banyuwangi</small>
                 </div>
-
             </div>
-
-
-            <!-- =========================
-                        RIGHT SIDE
-            ========================== -->
-
             <div class="topbar-right">
-
-
-                <!-- Date -->
-
                 <span class="text-secondary">
-
                     <i class="bi bi-calendar-event me-1"></i>
-
                     {{ now()->translatedFormat('d F Y') }}
-
                 </span>
-
-
-                <!-- User Avatar -->
-
                 <div class="profile mb-0">
-
-                    <div class="profile-avatar" style="
-                            width: 40px;
-                            height: 40px;
-                            font-size: 15px;
-                        ">
-
+                    <div class="profile-avatar" style="width: 40px;height: 40px;font-size: 15px;">
                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-
                     </div>
-
                 </div>
-
             </div>
-
         </header>
-
-
-        <!-- =====================================================
-                            PAGE CONTENT
-        ====================================================== -->
-
         <div class="content">
-
-
-            <!-- =========================
-                            BREADCRUMB
-            ========================== -->
-
             @if(trim($__env->yieldContent('breadcrumb')))
-
                 <nav class="mb-4">
-
                     <ol class="breadcrumb mb-0">
-
                         @yield('breadcrumb')
-
                     </ol>
-
                 </nav>
-
             @endif
-
-
-            <!-- =========================
-                            SUCCESS
-            ========================== -->
-
             @if(session('success'))
-
                 <div class="alert alert-success shadow-sm">
-
                     <i class="bi bi-check-circle-fill me-2"></i>
-
                     {{ session('success') }}
-
                 </div>
-
             @endif
-
-
-            <!-- =========================
-                            ERROR
-            ========================== -->
-
             @if(session('error'))
-
                 <div class="alert alert-danger shadow-sm">
-
                     <i class="bi bi-x-circle-fill me-2"></i>
-
                     {{ session('error') }}
-
                 </div>
-
             @endif
-
-
-            <!-- =========================
-                        VALIDATION ERROR
-            ========================== -->
-
             @if($errors->any())
-
                 <div class="alert alert-danger shadow-sm">
-
                     <div class="fw-bold mb-2">
-
                         <i class="bi bi-exclamation-circle me-2"></i>
-
                         Terjadi kesalahan
-
                     </div>
-
-
                     <ul class="mb-0 ps-4">
-
                         @foreach($errors->all() as $error)
-
-                            <li>
-                                {{ $error }}
-                            </li>
-
+                            <li>{{ $error }}</li>
                         @endforeach
-
                     </ul>
-
                 </div>
-
             @endif
-
-
-            <!-- =========================
-                        PAGE CONTENT
-            ========================== -->
-
             @yield('content')
-
         </div>
-
     </main>
-
-
-    <!-- =========================================================
-                        GLOBAL LOADING
-    ========================================================== -->
-
     <div id="globalLoading" class="global-loading">
-
         <div class="loading-box">
-
             <div class="spinner-border text-success" role="status">
-
                 <span class="visually-hidden">
                     Loading...
                 </span>
-
             </div>
-
             <div class="loading-text" id="loadingText">
-
                 Memproses...
-
             </div>
-
         </div>
-
     </div>
-
-
-    <!-- =========================================================
-                            FOOTER
-    ========================================================== -->
-
     <footer class="text-center py-4 text-secondary border-top bg-white">
-
         <small>
-
             © {{ date('Y') }}
-
-            <strong>
-                MTsN 1 Banyuwangi
-            </strong>
-
-            • Sistem Persuratan
-
+            <strong>MTsN 1 Banyuwangi</strong>
+            • Sistem Persuratan PTSP
         </small>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">

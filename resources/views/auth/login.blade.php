@@ -16,14 +16,14 @@
                     </div>
                     <div class="brand-title">
                         <small>
-                            KEMENTRIAN AGAMA KABUPATEN BANYUWANGI
+                            KEMENTERIAN AGAMA KABUPATEN BANYUWANGI
                         </small>
                         <h1>MTsN 1 <br>Banyuwangi</h1>
                     </div>
                     <div class="brand-divider"></div>
                     <div class="brand-system">
                         <small>SISTEM INFORMASI</small>
-                        <h2>PERSURATAN</h2>
+                        <h2>ADMINISTRASI PERSURATAN</h2>
                         <p>Kelola surat masuk, surat keluar,
                             disposisi, dan arsip digital
                             secara terintegrasi.
@@ -35,7 +35,7 @@
                         </span>
                         <div>
                             <strong>Administrasi Digital</strong>
-                            <small>Sistem Persuratan MTsN 1 Banyuwangi</small>
+                            <small>Sistem Persuratan PTSP MTsN 1 Banyuwangi</small>
                         </div>
                     </div>
                 </div>

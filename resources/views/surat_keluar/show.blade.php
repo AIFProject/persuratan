@@ -59,43 +59,30 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             document.querySelectorAll('.delete-form').forEach(form => {
-
                 form.addEventListener('submit', function (e) {
-
                     e.preventDefault();
-
                     const button = this.querySelector('button');
                     const nomor = button.dataset.nomor;
-
                     Swal.fire({
                         title: 'Hapus Surat?',
                         html: `
                                 <p>
                                     Surat <strong>${nomor}</strong> akan dihapus.
                                 </p>
-
                                 <p class="text-danger mb-0">
                                     Data yang dihapus tidak dapat dikembalikan.
                                 </p>
                             `,
                         icon: 'warning',
-
                         showCancelButton: true,
-
                         confirmButtonText: 'Hapus',
                         cancelButtonText: 'Batal',
-
                         confirmButtonColor: '#dc3545',
                         cancelButtonColor: '#6c757d',
-
                         reverseButtons: true
-
                     }).then((result) => {
-
                         if (result.isConfirmed) {
-
                             // Loading setelah klik "Hapus"
                             Swal.fire({
                                 title: 'Menghapus surat...',
@@ -103,25 +90,18 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 showConfirmButton: false,
-
                                 didOpen: () => {
                                     Swal.showLoading();
                                 }
                             });
-
                             // Cegah double click
                             button.disabled = true;
-
                             // Jalankan DELETE Laravel
                             form.submit();
                         }
-
                     });
-
                 });
-
             });
-
         });
     </script>
 @endpush

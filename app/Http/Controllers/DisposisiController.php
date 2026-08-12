@@ -80,9 +80,17 @@ class DisposisiController extends Controller
 
     public function destroy(Disposisi $disposisi)
     {
-        $disposisi->delete();
+        try {
+            $disposisi->delete();
 
-        return redirect()->route('disposisi.index')->with('success', 'Disposisi berhasil dihapus.');
+            return redirect()
+                ->route('disposisi.index')
+                ->with('success', 'Disposisi berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('disposisi.index')
+                ->with('error', 'Gagal menghapus disposisi: ' . $e->getMessage());
+        }
     }
 
     public function cetakDocx(Disposisi $disposisi)

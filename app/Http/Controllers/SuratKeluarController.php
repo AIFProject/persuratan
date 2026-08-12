@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Request\SuratKeluarRequest;
+use App\Http\Requests\SuratKeluarRequest;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 

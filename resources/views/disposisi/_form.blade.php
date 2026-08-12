@@ -24,7 +24,7 @@
         <label class="form-label">Status</label>
         <select name="status" class="form-select @error('status') is-invalid @enderror" required>
             @foreach(['Belum diproses', 'Diproses', 'Selesai'] as $status)
-                <option value="{{ $status }}" {{ old('status', $disposisi->status ?? 'Belum Diproses') == $status ? 'selected' : '' }}>{{ $status }}</option>
+                <option value="{{ $status }}" {{ old('status', $disposisi->status ?? 'Belum diproses') == $status ? 'selected' : '' }}>{{ $status }}</option>
             @endforeach
         </select>
         @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -41,7 +41,6 @@
         class="form-select @error('sifat_surat') is-invalid @enderror">
 
         @foreach([
-            'Biasa',
             'Segera',
             'Sangat Segera',
             'Rahasia'

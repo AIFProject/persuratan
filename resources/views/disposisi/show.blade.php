@@ -11,9 +11,14 @@
             <div>
                 <a href="{{ route('disposisi.edit', $disposisi->id) }}" class="btn btn-warning btn-sm"><i
                         class="bi bi-pencil"></i> Edit</a>
-                <button class="btn btn-danger btn-sm" onclick="hapusDisposisi()">
-                    <i class="bi bi-trash"></i>Hapus
-                </button>
+                <form action="{{ route('disposisi.destroy', $disposisi->id) }}" method="POST" class="delete-form d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        data-nomor="{{ $disposisi->suratMasuk->nomor_surat }}">
+                        <i class="bi bi-trash"></i> Hapus
+                    </button>
+                </form>
                 <a href="{{ route('disposisi.cetak', $disposisi) }}" class="btn btn-primary">
                     <i class="bi bi-file-earmark-word-fill"></i>
                     Download DOCX
@@ -50,51 +55,75 @@
             </table>
         </div>
     </div>
+@endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    <form id="deleteForm" action="{{ route('disposisi.destroy', $disposisi) }}" method="POST" style="display:none;">
+            document.querySelectorAll('.delete-form').forEach(form => {
 
-        @csrf
-        @method('DELETE')
+                form.addEventListener('submit', function (e) {
 
-    </form>
+                    e.preventDefault();
 
-    @push('scripts')
-        <script>
+                    const button = this.querySelector('button');
+                    const nomor = button.dataset.nomor;
 
-            function hapusDisposisi() {
+                    Swal.fire({
+                        title: 'Hapus Disposisi?',
+                        html: `
+                                            <p>
+                                                Disposisi untuk surat
+                                                <strong>${nomor}</strong>
+                                                akan dihapus.
+                                            </p>
 
-                Swal.fire({
+                                            <p class="text-danger mb-0">
+                                                Data disposisi yang dihapus tidak dapat dikembalikan.
+                                                Surat masuk tetap tersimpan.
+                                            </p>
+                                        `,
+                        icon: 'warning',
 
-                    title: 'Hapus Disposisi?',
+                        showCancelButton: true,
 
-                    text: "Data yang dihapus tidak dapat dikembalikan.",
+                        confirmButtonText: 'Hapus',
+                        cancelButtonText: 'Batal',
 
-                    icon: 'warning',
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
 
-                    showCancelButton: true,
+                        reverseButtons: true
 
-                    confirmButtonColor: '#d33',
+                    }).then((result) => {
 
-                    cancelButtonColor: '#6c757d',
+                        if (result.isConfirmed) {
 
-                    confirmButtonText: 'Ya, Hapus!',
+                            Swal.fire({
+                                title: 'Menghapus disposisi...',
+                                text: 'Mohon tunggu sebentar.',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
 
-                    cancelButtonText: 'Batal'
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
 
-                }).then((result) => {
+                            // Cegah double click
+                            button.disabled = true;
 
-                    if (result.isConfirmed) {
+                            // Jalankan DELETE Laravel
+                            form.submit();
+                        }
 
-                        document
-                            .getElementById('deleteForm')
-                            .submit();
-
-                    }
+                    });
 
                 });
 
-            }
+            });
 
-        </script>
-    @endpush
-@endsection
+        });
+    </script>
+@endpush

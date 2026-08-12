@@ -24,7 +24,7 @@ class DisposisiRequest extends FormRequest
             'lain1_text' => 'nullable|string',
             'tanggal_disposisi' => 'required|date',
             'catatan' => 'nullable|string',
-            'status' => 'required|in:Belum Diproses,Diproses,Selesai',
+            'status' => 'required|in:Belum diproses,Diproses,Selesai',
         ];
     }
 

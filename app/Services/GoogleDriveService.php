@@ -18,20 +18,44 @@ class GoogleDriveService
     {
         $this->client = new Client;
 
-        $this->client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
-        $this->client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
-        $this->client->setRedirectUri(env('GOOGLE_DRIVE_REDIRECT_URI'));
+        $this->client->setClientId(
+            env('GOOGLE_DRIVE_CLIENT_ID')
+        );
+
+        $this->client->setClientSecret(
+            env('GOOGLE_DRIVE_CLIENT_SECRET')
+        );
 
         $this->client->setAccessType('offline');
-        $this->client->setPrompt('consent');
 
         $this->client->setScopes([
             Drive::DRIVE_FILE,
         ]);
 
-        $this->client->refreshToken(
-            env('GOOGLE_REFRESH_TOKEN')
+        $refreshToken = env('GOOGLE_REFRESH_TOKEN');
+
+        if (! $refreshToken) {
+            throw new \RuntimeException(
+                'GOOGLE_REFRESH_TOKEN belum tersedia.'
+            );
+        }
+
+        $token = $this->client->fetchAccessTokenWithRefreshToken(
+            $refreshToken
         );
+
+        if (isset($token['error'])) {
+            throw new \RuntimeException(
+                'Gagal mendapatkan access token Google: '.
+                ($token['error_description'] ?? $token['error'])
+            );
+        }
+
+        if (! $this->client->getAccessToken()) {
+            throw new \RuntimeException(
+                'Access token Google tidak berhasil diperoleh.'
+            );
+        }
 
         $this->drive = new Drive($this->client);
     }

@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/surat-keluar', [LaporanController::class, 'cetakSuratKeluar'])->name('laporan.surat-keluar');
     Route::get('/google/auth', [GoogleDriveController::class, 'redirect'])
         ->name('google.auth');
+    Route::get('/google/callback', [GoogleDriveController::class, 'callback'])
+        ->name('google.callback');
     Route::resource('surat-keputusan', SuratKeputusanController::class);
     Route::get('surat-keputusan/{suratKeputusan}/download', [SuratKeputusanController::class, 'download'])->name('surat-keputusan.download');
     Route::get('/disposii/{disposisi}/cetak-docx', [DisposisiController::class, 'cetakDocx'])->name('disposisi.cetak');

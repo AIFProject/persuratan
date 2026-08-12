@@ -2,29 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use Google\Client;
+use Google\Service\Drive;
 use Illuminate\Http\Request;
-use App\Services\GoogleDriveService;
 
-class GoogleDriveController extends Controller
-{
-    protected GoogleDriveService $google;
-    public function __construct(GoogleDriveService $google) {
-        $this->google = $google;
+class GoogleDriveController extends Controller {
+    private function client(): Client {
+        $client = new Client;
+        $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+        $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+        $client->setRedirectUri(env('GOOGLE_DRIVE_REDIRECT_URI'));
+        $client->setAccessType('offline');
+        $client->setPrompt('consent');
+        $client->setScopes([Drive::DRIVE_FILE,]);
+        return $client;
     }
+
     public function redirect() {
-        return redirect (
-            $this->google->client()->createAuthUrl()
-        );
+        $client = $this->client();
+        return redirect()->away($client->createAuthUrl());
     }
-    public function callback() {
-        $client = $this->google->client();
-        $token = $client->fetchAccessTokenWithAuthCode(
-            request('code')
-        );
-        if (isset($token['error'])) {
-            return $token;
+
+    public function callback(Request $request) {
+        if (!$request->filled('code')) {
+            return response()->json([
+                'error' => 'Authorization code tidak ditemukan.',
+            ], 400);
         }
-        dd($token);
+        $client = $this->client();
+        $token = $client->fetchAccessTokenWithAuthCode($request->code);
+        if (isset($token['token'])) {
+            return response()->json($token, 400);
+        }
+
+        return response()->json([
+            'message' => 'OAuth berhasil.',
+            'refresh_token' => $token['refresh_token'] ?? null,
+            'access_token' => $token['access_token'] ?? null,
+            'expires_in' => $token['expires_in'] ?? null,
+        ]);
     }
-    
 }

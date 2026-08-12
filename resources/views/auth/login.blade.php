@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('title', 'Login')
+@section('title', 'Login')  
 @section('content')
     <div class="login-page">
         <div class="login-background">
@@ -72,7 +72,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         {{-- EMAIL --}}
-                        <div class="login-form-group">  
+                        <div class="login-form-group">
                             <label for="email">
                                 Email
                             </label>
@@ -186,5 +186,34 @@
             </div>
         </div>
     </div>
-    </div>
+
 @endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+
+            if (passwordInput && togglePassword) {
+                togglePassword.addEventListener('click', function () {
+                    const icon = this.querySelector('material-symbol-outlined');
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        icon.textContent = 'visibility_off';
+                    } else {
+                        passwordInput.type = 'password';
+                        icon.textContent = 'visibility';
+                    }
+                });
+            }
+            const loginForm = document.querySelector('form[action="{{ route('login') }}"]');
+            const loginButton = document.getElementById('loginButton');
+            if (loginForm && loginButton) {
+                loginForm.addEventListener('submit', function () {
+                    loginButton.disabled = true;
+                    loginButton.querySelector('span:first-child').textContent = 'MEMPROSES...';
+                });
+            }
+        });
+    </script>
+@endpush

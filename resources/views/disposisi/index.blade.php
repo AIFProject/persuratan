@@ -115,8 +115,8 @@
                                     {{ $d->tujuan_disposisi }}
                                 </td>
                                 <td>
-                                    @if($d->status == 'Belum Diproses')
-                                        <span class="badge bg-secondary rounded-pill px-3 py-2">
+                                    @if($d->status == 'Belum diproses')
+                                        <span class="badge bg-danger rounded-pill px-3 py-2">
                                             Belum Diproses
                                         </span>
                                     @elseif($d->status == 'Diproses')

@@ -1,249 +1,134 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sistem Persuratan')</title>
-    <!-- =====================================================
-                    BOOTSTRAP
-    ====================================================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- =====================================================
-                    BOOTSTRAP ICONS
-    ====================================================== -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <!-- =====================================================
-                    GOOGLE FONTS
-    ====================================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
-    <!-- =====================================================
-                    MATERIAL SYMBOLS
-    ====================================================== -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
-    <!-- =====================================================
-                    FAVICON
-    ====================================================== -->
     <link rel="icon" type="image/png" href="{{ asset('logo-mtsn.png') }}">
     <style>
         :root {
-            /* Primary */
             --primary: #1bde1b;
             --primary-dark: #16c216;
             --primary-light: #49eb49;
             --primary-soft: #d8fbd8;
-
-            /* Sidebar */
             --sidebar: #0f2613;
             --sidebar-second: #16361b;
             --sidebar-hover: rgba(27, 222, 27, .12);
-
-            /* Background */
             --background: #f5fff5;
             --surface: #ffffff;
-
-            /* Text */
             --text: #1b2a1b;
             --muted: #5d7460;
-
-            /* Border */
             --border: #dcefdc;
-
-            /* Status */
             --success: #1bde1b;
             --warning: #f59e0b;
             --danger: #ef4444;
-
-            /* Layout */
             --sidebar-width: 280px;
             --sidebar-collapse: 88px;
             --topbar-height: 70px;
-
-            /* Radius */
             --radius: 18px;
-
-            /* Shadow */
-            --shadow-sm:
-                0 5px 15px rgba(27, 222, 27, .08);
-
-            --shadow:
-                0 10px 35px rgba(27, 222, 27, .10);
-
-            --shadow-lg:
-                0 20px 50px rgba(27, 222, 27, .16);
-
-            /* Transition */
+            --shadow-sm: 0 5px 15px rgba(27, 222, 27, .08);
+            --shadow: 0 10px 35px rgba(27, 222, 27, .10);
+            --shadow-lg: 0 20px 50px rgba(27, 222, 27, .16);
             --transition:
                 .3s cubic-bezier(.4, 0, .2, 1);
         }
-
-
-        /* =====================================================
-                        RESET
-        ====================================================== */
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
         }
-
         body {
             font-family: 'Inter', sans-serif;
-
-            background:
-                var(--background);
-
-            color:
-                var(--text);
-
+            background: var(--background);
+            color: var(--text);
             min-height: 100vh;
-
             overflow-x: hidden;
         }
-
         a {
             text-decoration: none;
         }
-
         ul {
             margin: 0;
             padding: 0;
             list-style: none;
         }
-
-
-        /* =====================================================
-                        SIDEBAR
-                        DESKTOP
-        ====================================================== */
-
         .sidebar {
             position: fixed;
-
             top: 0;
             left: 0;
-
             width: var(--sidebar-width);
             height: 100vh;
-
             z-index: 1045;
-
             display: flex;
             flex-direction: column;
-
             overflow: hidden;
-
             color: #fff;
-
             background:
                 linear-gradient(180deg,
                     #1bde1b 0%,
                     #149614 100%);
-
             box-shadow:
                 18px 0 45px rgba(15, 23, 42, .12);
-
             transition:
                 width var(--transition);
         }
-
-
-        /* =====================================================
-                        BRAND
-        ====================================================== */
-
         .brand {
             min-height: 110px;
-
             padding: 24px;
-
             display: flex;
-
             align-items: center;
-
             gap: 16px;
-
             border-bottom:
                 1px solid rgba(255, 255, 255, .10);
         }
-
         .brand-logo {
             width: 54px;
             height: 54px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             flex-shrink: 0;
-
             border-radius: 18px;
-
             color: #fff;
-
-            background:
-                rgba(255, 255, 255, .18);
-
-            backdrop-filter:
-                blur(10px);
+            background: rgba(255, 255, 255, .18);
+            backdrop-filter: blur(10px);
         }
-
         .brand-logo .material-symbols-outlined {
             font-size: 28px;
         }
-
         .brand-text {
             min-width: 0;
-
             flex: 1;
-
             overflow: hidden;
         }
-
         .brand-text small {
             display: block;
-
             color: #fff;
-
             font-size: 11px;
-
             font-weight: 500;
-
             letter-spacing: 1px;
-
             text-transform: uppercase;
-
             white-space: nowrap;
         }
-
         .brand-text h4 {
             margin: 4px 0 0;
-
             color: #fff;
-
             font-size: 20px;
-
             font-weight: 700;
-
             white-space: nowrap;
         }
-
-
-        /* =====================================================
-                        DESKTOP SIDEBAR BUTTON
-        ====================================================== */
-
         .sidebar-collapse-btn {
             display: none;
             width: 42px;
@@ -263,204 +148,107 @@
             border-color: var(--primary);
             background: var(--primary-soft);
         }
-
-
-        /* =====================================================
-                        MENU
-        ====================================================== */
-
         .menu {
             flex: 1;
-
             padding: 24px 18px;
-
             overflow-y: auto;
         }
-
         .menu::-webkit-scrollbar {
             width: 5px;
         }
-
         .menu::-webkit-scrollbar-track {
             background: transparent;
         }
-
         .menu::-webkit-scrollbar-thumb {
-            background:
-                rgba(255, 255, 255, .15);
-
+            background: rgba(255, 255, 255, .15);
             border-radius: 50px;
         }
-
         .menu-title {
             padding-left: 16px;
-
             margin-bottom: 16px;
-
             color: rgba(255, 255, 255, .85);
-
             font-size: 11px;
-
             font-weight: 600;
-
             letter-spacing: 1px;
-
             text-transform: uppercase;
         }
-
-
-        /* =====================================================
-                        NAV
-        ====================================================== */
-
         .sidebar .nav {
             display: flex;
-
             flex-direction: column;
-
             gap: 8px;
         }
-
         .sidebar .nav-item {
             width: 100%;
         }
-
         .sidebar .nav-link {
             position: relative;
-
             display: flex;
-
             align-items: center;
-
             gap: 14px;
-
             width: 100%;
-
             padding: 10px 12px;
-
             border-radius: 16px;
-
             color: #e2f4e2;
-
             font-size: 15px;
-
             font-weight: 500;
-
             transition: var(--transition);
-
             overflow: hidden;
         }
-
         .sidebar .nav-link .material-symbols-outlined {
             width: 42px;
             height: 42px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             flex-shrink: 0;
-
             border-radius: 12px;
-
-            background:
-                rgba(255, 255, 255, .06);
-
+            background: rgba(255, 255, 255, .06);
             font-size: 22px;
-
             transition: var(--transition);
         }
-
         .sidebar .nav-link p {
             margin: 0;
-
             white-space: nowrap;
-
             overflow: hidden;
-
             text-overflow: ellipsis;
         }
-
-
-        /* =====================================================
-                        NAV HOVER
-        ====================================================== */
-
         .sidebar .nav-link:hover {
             color: #fff;
-
-            background:
-                rgba(255, 255, 255, .09);
-
-            transform:
-                translateX(5px);
+            background: rgba(255, 255, 255, .09);
+            transform: translateX(5px);
         }
-
         .sidebar .nav-link:hover .material-symbols-outlined {
-            background:
-                rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .12);
         }
-
-
-        /* =====================================================
-                        NAV ACTIVE
-        ====================================================== */
-
         .sidebar .nav-link.active {
             color: #149614;
-
             background: #fff;
-
-            box-shadow:
-                0 12px 30px rgba(27, 222, 27, .25);
+            box-shadow: 0 12px 30px rgba(27, 222, 27, .25);
         }
-
         .sidebar .nav-link.active .material-symbols-outlined {
             color: var(--primary);
-
-            background:
-                var(--primary-soft);
+            background: var(--primary-soft);
         }
-
         .sidebar .nav-link.active::before {
             content: "";
-
             position: absolute;
-
             top: 10px;
             left: -2px;
-
             width: 5px;
             height: 34px;
-
             border-radius: 20px;
-
-            background:
-                var(--primary);
+            background: var(--primary);
         }
-
-
-        /* =====================================================
-                        COLLAPSED DESKTOP
-        ====================================================== */
-
         .sidebar.collapsed {
             width: var(--sidebar-collapse);
         }
-
         .sidebar.collapsed .brand {
             min-height: 110px;
-
             flex-direction: column;
-
             justify-content: center;
-
             padding: 18px 0;
-
             gap: 10px;
         }
-
         .sidebar.collapsed .brand-text,
         .sidebar.collapsed .menu-title,
         .sidebar.collapsed .nav-link p,
@@ -468,546 +256,271 @@
         .sidebar.collapsed .logout-btn span {
             display: none;
         }
-
         .sidebar.collapsed .brand-logo {
             order: 2;
         }
-
         .sidebar.collapsed .sidebar-collapse-btn {
             order: 1;
         }
-
         .sidebar.collapsed .nav-link {
             justify-content: center;
-
             padding: 10px;
         }
-
         .sidebar.collapsed .nav-link.active::before {
             display: none;
         }
-
         .sidebar.collapsed .nav-link:hover {
             transform: none;
         }
-
-
-        /* =====================================================
-                        COLLAPSED TOOLTIP
-        ====================================================== */
-
         .sidebar.collapsed .nav-link:hover::after {
             content: attr(data-title);
-
             position: absolute;
-
             top: 50%;
             left: 76px;
-
-            transform:
-                translateY(-50%);
-
+            transform: translateY(-50%);
             z-index: 2000;
-
             padding: 8px 12px;
-
             border-radius: 10px;
-
             color: #fff;
-
             background: #111827;
-
             font-size: 13px;
-
             white-space: nowrap;
-
-            box-shadow:
-                0 10px 25px rgba(0, 0, 0, .18);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
         }
-
-
-        /* =====================================================
-                        SIDEBAR FOOTER
-        ====================================================== */
-
         .sidebar-footer {
             padding: 20px;
-
-            border-top:
-                1px solid rgba(255, 255, 255, .10);
+            border-top: 1px solid rgba(255, 255, 255, .10);
         }
-
         .profile {
             display: flex;
-
             align-items: center;
-
             gap: 14px;
-
             padding: 12px;
-
             margin-bottom: 16px;
-
             border-radius: 18px;
-
-            background:
-                rgba(255, 255, 255, .06);
+            background: rgba(255, 255, 255, .06);
         }
-
         .profile-avatar {
             width: 50px;
             height: 50px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             flex-shrink: 0;
-
             border-radius: 16px;
-
             color: #fff;
-
-            background:
-                linear-gradient(135deg,
-                    #1bde1b,
-                    #49eb49);
-
+            background: linear-gradient(135deg, #1bde1b, #49eb49);
             font-size: 18px;
-
             font-weight: 700;
         }
-
         .profile-info {
             min-width: 0;
         }
-
         .profile-info h6 {
             margin: 0;
-
             color: #fff;
-
             font-size: 15px;
-
             font-weight: 600;
-
             white-space: nowrap;
-
             overflow: hidden;
-
             text-overflow: ellipsis;
         }
-
         .profile-info small {
             color: #d1e7d1;
         }
-
-
-        /* =====================================================
-                        LOGOUT
-        ====================================================== */
-
         .logout-btn {
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             gap: 12px;
-
             width: 100%;
-
             padding: 14px;
-
             border-radius: 16px;
-
             color: #ffd0d0;
-
-            background:
-                rgba(239, 68, 68, .10);
-
+            background: rgba(239, 68, 68, .10);
             transition: var(--transition);
         }
-
         .logout-btn:hover {
             color: #fff;
-
-            background:
-                #ef4444;
+            background: #ef4444;
         }
-
-
-        /* =====================================================
-                        MAIN WRAPPER
-        ====================================================== */
-
         .main-wrapper {
             position: relative;
-
             min-height: 100vh;
-
             margin-left: var(--sidebar-width);
-
             background: #f4f8f4;
-
             isolation: isolate;
-
             overflow: hidden;
-
-            transition:
-                margin-left var(--transition);
+            transition: margin-left var(--transition);
         }
-
         .main-wrapper.expanded {
             margin-left: var(--sidebar-collapse);
         }
-
-
-        /* =====================================================
-                        BACKGROUND
-        ====================================================== */
-
         .main-wrapper::before {
             content: "";
-
             position: absolute;
-
             inset: 0;
-
             z-index: 0;
-
             pointer-events: none;
-
-            background-image:
-                url("{{ asset('images.png') }}");
-
+            background-image: url("{{ asset('images.png') }}");
             background-repeat: no-repeat;
-
             background-position: center;
-
             background-size: 2000px;
-
             filter: blur(10px);
-
             opacity: .08;
         }
-
-
-        /* =====================================================
-                        TOPBAR
-        ====================================================== */
-
         .topbar {
             position: sticky;
-
             top: 0;
-
             z-index: 1000;
-
             height: var(--topbar-height);
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             padding: 0 28px;
-
-            background:
-                rgba(255, 255, 255, .82);
-
-            backdrop-filter:
-                blur(16px);
-
-            border-bottom:
-                1px solid rgba(226, 232, 240, .8);
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, .8);
         }
-
         .topbar-left {
             display: flex;
-
             align-items: center;
-
             gap: 16px;
         }
-
         .topbar-title h4 {
             margin: 0;
-
             font-size: 22px;
-
             font-weight: 700;
         }
-
         .topbar-title small {
             color: var(--muted);
         }
-
         .topbar-right {
             display: flex;
-
             align-items: center;
-
             gap: 18px;
         }
-
-
-        /* =====================================================
-                        MOBILE MENU BUTTON
-        ====================================================== */
-
         .mobile-menu-btn {
             width: 42px;
             height: 42px;
-
             display: none;
-
             align-items: center;
             justify-content: center;
-
             padding: 0;
-
             border-radius: 12px;
         }
-
-
-        /* =====================================================
-                        CONTENT
-        ====================================================== */
-
         .content {
             position: relative;
-
             z-index: 2;
-
             padding: 34px;
         }
-
         .content>.container-fluid {
             padding: 0;
         }
-
-
-        /* =====================================================
-                        CARD
-        ====================================================== */
-
         .card {
             border: none;
-
             border-radius: 20px;
-
-            box-shadow:
-                var(--shadow);
-
+            box-shadow: var(--shadow);
             overflow: hidden;
-
-            transition:
-                var(--transition);
+            transition: var(--transition);
         }
-
         .card:hover {
-            transform:
-                translateY(-4px);
-
-            box-shadow:
-                var(--shadow-lg);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
-
         .card-header {
             background: #fff;
-
-            border-bottom:
-                1px solid var(--border);
-
+            border-bottom: 1px solid var(--border);
             font-weight: 600;
         }
-
-
-        /* =====================================================
-                        BUTTON
-        ====================================================== */
-
         .btn {
             border-radius: 12px;
-
             font-weight: 600;
         }
-
         .btn-primary {
             border: none;
-
-            background:
-                var(--primary);
+            background: var(--primary);
         }
-
         .btn-primary:hover {
-            background:
-                var(--primary-dark);
+            background: var(--primary-dark);
         }
-
-
-        /* =====================================================
-                        TABLE
-        ====================================================== */
-
         .table {
             vertical-align: middle;
         }
-
         .table thead {
             background: #f8fafc;
         }
-
         .table thead th {
             border: none;
-
             color: #475569;
-
             font-weight: 600;
         }
-
-
-        /* =====================================================
-                        ALERT
-        ====================================================== */
-
         .alert {
             border: none;
-
             border-radius: 14px;
         }
-
-
-        /* =====================================================
-                        SCROLLBAR
-        ====================================================== */
-
         ::-webkit-scrollbar {
             width: 8px;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-
             border-radius: 50px;
         }
-
         ::-webkit-scrollbar-track {
             background: transparent;
         }
-
-
-        /* =====================================================
-                        RIPPLE
-        ====================================================== */
-
         .nav-link {
             position: relative;
-
             overflow: hidden;
         }
-
         .ripple {
             position: absolute;
-
             width: 10px;
             height: 10px;
-
             border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, .35);
-
-            transform:
-                translate(-50%, -50%);
-
-            animation:
-                ripple .6s linear;
+            background: rgba(255, 255, 255, .35);
+            transform: translate(-50%, -50%);
+            animation: ripple .6s linear;
         }
-
         @keyframes ripple {
-
             from {
                 opacity: 1;
-
-                transform:
-                    translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
             }
-
             to {
                 opacity: 0;
-
-                transform:
-                    translate(-50%, -50%) scale(18);
+                transform: translate(-50%, -50%) scale(18);
             }
         }
-
-
-        /* =====================================================
-                        RESPONSIVE
-                        TABLET & MOBILE
-        ====================================================== */
-
         @media (max-width: 991.98px) {
-
-            /*
-             * Desktop sidebar berubah menjadi
-             * Bootstrap Offcanvas pada Part 2.
-             */
-
             .sidebar {
                 width: var(--sidebar-width);
-
                 margin: 0;
-
-                box-shadow:
-                    18px 0 45px rgba(15, 23, 42, .20);
-
-                /*
-                 * Bootstrap akan mengatur transform,
-                 * visibility, backdrop, dan focus.
-                 */
+                box-shadow: 18px 0 45px rgba(15, 23, 42, .20);
             }
-
             .sidebar.collapsed {
                 width: var(--sidebar-width);
             }
-
             .main-wrapper,
             .main-wrapper.expanded {
                 margin-left: 0;
             }
-
             .mobile-menu-btn {
                 display: flex;
             }
-
             .topbar {
                 padding: 0 20px;
             }
-
             .content {
                 padding: 24px;
             }
-
-            /*
-             * Pada mobile sidebar selalu versi penuh.
-             */
             .sidebar.collapsed .brand {
                 min-height: 110px;
-
                 flex-direction: row;
-
                 justify-content: flex-start;
-
                 padding: 24px;
-
                 gap: 16px;
             }
-
             .sidebar.collapsed .brand-text,
             .sidebar.collapsed .menu-title,
             .sidebar.collapsed .nav-link p,
@@ -1015,69 +528,43 @@
             .sidebar.collapsed .logout-btn span {
                 display: block;
             }
-
             .sidebar.collapsed .brand-logo,
             .sidebar.collapsed .sidebar-collapse-btn {
                 order: initial;
             }
-
             .sidebar.collapsed .nav-link {
                 justify-content: flex-start;
-
                 padding: 10px 12px;
             }
-
             .sidebar.collapsed .nav-link:hover::after {
                 display: none;
             }
         }
-
-
-        /* =====================================================
-                        MOBILE
-        ====================================================== */
-
         @media (max-width: 768px) {
-
             .topbar {
                 height: 64px;
-
                 padding: 0 16px;
             }
-
             .topbar-title h4 {
                 font-size: 18px;
             }
-
             .topbar-title small {
                 display: none;
             }
-
             .topbar-right {
                 gap: 10px;
             }
-
             .topbar-right>span {
                 display: none;
             }
-
             .content {
                 padding: 20px;
             }
         }
-
-
-        /* =====================================================
-                        SMALL MOBILE
-        ====================================================== */
-
         @media (max-width: 480px) {
-
             .sidebar {
-                width: min(var(--sidebar-width),
-                        88vw);
+                width: min(var(--sidebar-width), 88vw);
             }
-
             .content {
                 padding: 15px;
             }
@@ -1086,78 +573,41 @@
                 padding: 0 14px;
             }
         }
-
-
-        /* =====================================================
-                        GLOBAL LOADING
-        ====================================================== */
-
         .global-loading {
             position: fixed;
-
             inset: 0;
-
             z-index: 9999;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
-            background:
-                rgba(255, 255, 255, .55);
-
-            backdrop-filter:
-                blur(5px);
-
+            background: rgba(255, 255, 255, .55);
+            backdrop-filter: blur(5px);
             opacity: 0;
-
             visibility: hidden;
-
             pointer-events: none;
-
-            transition:
-                opacity .2s ease,
-                visibility .2s ease;
+            transition: opacity .2s ease, visibility .2s ease;
         }
-
         .global-loading.show {
             opacity: 1;
-
             visibility: visible;
-
             pointer-events: auto;
         }
-
         .loading-box {
             min-width: 180px;
-
             padding: 24px;
-
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
-
             gap: 14px;
-
             border-radius: 18px;
-
             background: #fff;
-
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, .15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .15);
         }
-
         .loading-text {
             color: var(--text);
-
             font-size: 14px;
-
             font-weight: 600;
         }
-
         .dashboard-overview {
             position: relative;
             overflow: hidden;
@@ -1173,16 +623,13 @@
                 var(--shadow-lg);
             isolation: isolate;
         }
-
         .overview-decoration {
             position: absolute;
             z-index: -1;
             border-radius: 50%;
             pointer-events: none;
-            background:
-                rgba(255, 255, 255, .06);
+            background: rgba(255, 255, 255, .06);
         }
-
         .overview-decoration-1 {
             width: 430px;
             height: 430px;
@@ -1644,13 +1091,15 @@
             }
         }
 
-        .arsip-btn-search, .arsip-btn-reset {
+        .arsip-btn-search,
+        .arsip-btn-reset {
             color: #fff !important;
             border: none;
             transition: var(--transition);
         }
 
-        .arsip-btn-search:hover, .arsip-btn-reset:hover {
+        .arsip-btn-search:hover,
+        .arsip-btn-reset:hover {
             color: #fff !important;
             transform: translateY(-2px);
             box-shadow: var(--shadow-sm);
@@ -2212,684 +1661,208 @@
             • Sistem Persuratan
 
         </small>
-
     </footer>
-    <!-- =========================================================
-                            BOOTSTRAP JS
-    ========================================================== -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
     </script>
-
-
-    <!-- =========================================================
-                            SIDEBAR JS
-    ========================================================== -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
-            /* =====================================================
-                            ELEMENTS
-            ====================================================== */
-
-            const sidebar =
-                document.getElementById('sidebar');
-
-            const sidebarCollapseBtn =
-                document.getElementById('sidebarCollapseBtn');
-
-            const mainWrapper =
-                document.getElementById('mainWrapper');
-
-            const navLinks =
-                document.querySelectorAll('.sidebar .nav-link');
-
-
-            /* =====================================================
-                            BREAKPOINT
-            ====================================================== */
-
+            const sidebar = document.getElementById('sidebar');
+            const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+            const mainWrapper = document.getElementById('mainWrapper');
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
             const DESKTOP_BREAKPOINT = 992;
-
-
             function isDesktop() {
-
                 return window.innerWidth >= DESKTOP_BREAKPOINT;
-
             }
-
-
-            /* =====================================================
-                            BOOTSTRAP OFFCANVAS
-            ====================================================== */
-
             let offcanvasInstance = null;
-
-
             if (sidebar) {
-
                 offcanvasInstance =
                     bootstrap.Offcanvas.getOrCreateInstance(
                         sidebar
                     );
-
             }
-
-
-            /* =====================================================
-                        DESKTOP COLLAPSE
-            ====================================================== */
-
             function setDesktopCollapsed(collapsed) {
-
                 if (!sidebar || !mainWrapper) {
                     return;
                 }
-
-
                 if (collapsed) {
-
                     sidebar.classList.add('collapsed');
-
                     mainWrapper.classList.add('expanded');
-
                 } else {
-
                     sidebar.classList.remove('collapsed');
-
                     mainWrapper.classList.remove('expanded');
-
                 }
-
-
-                localStorage.setItem(
-                    'sidebar-collapsed',
-                    collapsed ? 'true' : 'false'
-                );
-
+                localStorage.setItem('sidebar-collapsed', collapsed ? 'true' : 'false');
             }
-
-
-            /* =====================================================
-                        RESTORE SIDEBAR STATE
-            ====================================================== */
-
             function restoreSidebarState() {
-
-                /*
-                 * Mobile:
-                 * Bootstrap Offcanvas yang mengatur sidebar.
-                 */
                 if (!isDesktop()) {
-
                     sidebar.classList.remove('collapsed');
-
                     mainWrapper.classList.remove('expanded');
-
                     return;
-
                 }
-
-
                 const savedState =
                     localStorage.getItem(
                         'sidebar-collapsed'
                     );
-
-
                 if (savedState === 'true') {
-
                     sidebar.classList.add('collapsed');
-
                     mainWrapper.classList.add('expanded');
-
                 } else {
-
                     sidebar.classList.remove('collapsed');
-
                     mainWrapper.classList.remove('expanded');
-
                 }
-
             }
-
-
-            /* =====================================================
-                        COLLAPSE BUTTON
-            ====================================================== */
-
             if (sidebarCollapseBtn) {
-
                 sidebarCollapseBtn.addEventListener(
                     'click',
                     function () {
-
-                        /*
-                         * ==========================================
-                         * MOBILE
-                         * ==========================================
-                         *
-                         * Bootstrap Offcanvas menangani penutupan.
-                         */
-
                         if (!isDesktop()) {
-
                             if (offcanvasInstance) {
-
                                 offcanvasInstance.hide();
-
                             }
-
                             return;
-
                         }
-
-
-                        /*
-                         * ==========================================
-                         * DESKTOP
-                         * ==========================================
-                         */
-
                         const isCollapsed =
                             sidebar.classList.contains(
                                 'collapsed'
                             );
-
-
-                        setDesktopCollapsed(
-                            !isCollapsed
-                        );
-
+                        setDesktopCollapsed(!isCollapsed);
                     }
                 );
-
             }
-
-
-            /* =====================================================
-                        UPDATE BUTTON ICON
-            ====================================================== */
-
             function updateCollapseButton() {
-
                 if (!sidebarCollapseBtn) {
                     return;
                 }
-
-
-                const icon =
-                    sidebarCollapseBtn.querySelector(
-                        '.material-symbols-outlined'
-                    );
-
-
+                const icon = sidebarCollapseBtn.querySelector('.material-symbols-outlined');
                 if (!icon) {
                     return;
                 }
-
-
-                /*
-                 * MOBILE
-                 */
-
                 if (!isDesktop()) {
-
                     icon.textContent = 'close';
-
-                    sidebarCollapseBtn.setAttribute(
-                        'aria-label',
-                        'Tutup menu'
-                    );
-
-                    sidebarCollapseBtn.setAttribute(
-                        'title',
-                        'Tutup menu'
-                    );
-
+                    sidebarCollapseBtn.setAttribute('aria-label', 'Tutup menu');
+                    sidebarCollapseBtn.setAttribute('title', 'Tutup menu');
                     return;
-
                 }
-
-
-                /*
-                 * DESKTOP
-                 */
-
                 const collapsed =
-                    sidebar.classList.contains(
-                        'collapsed'
-                    );
-
-
+                    sidebar.classList.contains('collapsed');
                 if (collapsed) {
-
-                    icon.textContent =
-                        'density_small';
-
-                    sidebarCollapseBtn.setAttribute(
-                        'aria-label',
-                        'Perbesar sidebar'
-                    );
-
-                    sidebarCollapseBtn.setAttribute(
-                        'title',
-                        'Perbesar sidebar'
-                    );
-
+                    icon.textContent = 'density_small';
+                    sidebarCollapseBtn.setAttribute('aria-label', 'Perbesar sidebar');
+                    sidebarCollapseBtn.setAttribute('title', 'Perbesar sidebar');
                 } else {
-
-                    icon.textContent =
-                        'density_small';
-
-                    sidebarCollapseBtn.setAttribute(
-                        'aria-label',
-                        'Kecilkan sidebar'
-                    );
-
-                    sidebarCollapseBtn.setAttribute(
-                        'title',
-                        'Kecilkan sidebar'
-                    );
-
+                    icon.textContent = 'density_small';
+                    sidebarCollapseBtn.setAttribute('aria-label', 'Kecilkan sidebar');
+                    sidebarCollapseBtn.setAttribute('title', 'Kecilkan sidebar');
                 }
-
             }
-
-
-            /* =====================================================
-                        CLOSE OFFCANVAS AFTER MENU CLICK
-            ====================================================== */
-
             navLinks.forEach(function (link) {
-
-                link.addEventListener(
-                    'click',
-                    function () {
-
-                        /*
-                         * Pada desktop tidak melakukan apa-apa.
-                         */
-
-                        if (isDesktop()) {
-                            return;
-                        }
-
-
-                        /*
-                         * Pada mobile:
-                         * Bootstrap Offcanvas ditutup.
-                         */
-
-                        if (offcanvasInstance) {
-
-                            offcanvasInstance.hide();
-
-                        }
-
+                link.addEventListener('click', function () {
+                    if (isDesktop()) {
+                        return;
                     }
+                    if (offcanvasInstance) {
+                        offcanvasInstance.hide();
+                    }
+                }
                 );
-
             });
-
-
-            /* =====================================================
-                        BOOTSTRAP OFFCANVAS EVENTS
-            ====================================================== */
-
             if (sidebar) {
-
-                /*
-                 * Saat sidebar selesai dibuka
-                 */
-
-                sidebar.addEventListener(
-                    'shown.bs.offcanvas',
-                    function () {
-
-                        document.body.classList.add(
-                            'sidebar-open'
-                        );
-
-                    }
-                );
-
-
-                /*
-                 * Saat sidebar selesai ditutup
-                 */
-
-                sidebar.addEventListener(
-                    'hidden.bs.offcanvas',
-                    function () {
-
-                        document.body.classList.remove(
-                            'sidebar-open'
-                        );
-
-                    }
-                );
-
-            }
-
-
-            /* =====================================================
-                        ESCAPE KEY
-            ====================================================== */
-
-            /*
-             * Tidak perlu menangani Escape secara manual.
-             *
-             * Bootstrap Offcanvas sudah menangani:
-             *
-             * Escape
-             * Backdrop
-             * Focus
-             * Body scroll lock
-             */
-
-
-            /* =====================================================
-                        RESIZE
-            ====================================================== */
-
-            let wasDesktop =
-                isDesktop();
-
-
-            window.addEventListener(
-                'resize',
-                function () {
-
-                    const currentlyDesktop =
-                        isDesktop();
-
-
-                    /*
-                     * Mobile -> Desktop
-                     */
-
-                    if (
-                        !wasDesktop &&
-                        currentlyDesktop
-                    ) {
-
-                        /*
-                         * Pastikan Offcanvas ditutup.
-                         */
-
-                        if (offcanvasInstance) {
-
-                            offcanvasInstance.hide();
-
-                        }
-
-                        restoreSidebarState();
-
-                    }
-
-
-                    /*
-                     * Desktop -> Mobile
-                     */
-
-                    if (
-                        wasDesktop &&
-                        !currentlyDesktop
-                    ) {
-
-                        /*
-                         * Mobile selalu menggunakan
-                         * sidebar penuh.
-                         */
-
-                        sidebar.classList.remove(
-                            'collapsed'
-                        );
-
-                        mainWrapper.classList.remove(
-                            'expanded'
-                        );
-
-                    }
-
-
-                    wasDesktop =
-                        currentlyDesktop;
-
-
-                    updateCollapseButton();
-
+                sidebar.addEventListener('shown.bs.offcanvas', function () {
+                    document.body.classList.add('sidebar-open');
                 }
+                );
+                sidebar.addEventListener('hidden.bs.offcanvas', function () {
+                    document.body.classList.remove('sidebar-open');
+                }
+                );
+            }
+            let wasDesktop = isDesktop();
+            window.addEventListener('resize', function () {
+                const currentlyDesktop = isDesktop();
+                if (!wasDesktop && currentlyDesktop) {
+                    if (offcanvasInstance) {
+                        offcanvasInstance.hide();
+                    }
+                    restoreSidebarState();
+                }
+                if (wasDesktop && !currentlyDesktop) {
+                    sidebar.classList.remove('collapsed');
+                    mainWrapper.classList.remove('expanded');
+                }
+                wasDesktop = currentlyDesktop;
+                updateCollapseButton();
+            }
             );
-
-
-            /* =====================================================
-                        RIPPLE EFFECT
-            ====================================================== */
-
             navLinks.forEach(function (link) {
-
-                link.addEventListener(
-                    'click',
-                    function (event) {
-
-                        const ripple =
-                            document.createElement(
-                                'span'
-                            );
-
-
-                        ripple.classList.add(
-                            'ripple'
-                        );
-
-
-                        const rect =
-                            link.getBoundingClientRect();
-
-
-                        ripple.style.left =
-                            (
-                                event.clientX -
-                                rect.left
-                            ) + 'px';
-
-
-                        ripple.style.top =
-                            (
-                                event.clientY -
-                                rect.top
-                            ) + 'px';
-
-
-                        link.appendChild(ripple);
-
-
-                        setTimeout(
-                            function () {
-
-                                ripple.remove();
-
-                            },
-                            600
-                        );
-
-                    }
+                link.addEventListener('click', function (event) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    const rect = link.getBoundingClientRect();
+                    ripple.style.left = (event.clientX - rect.left) + 'px';
+                    ripple.style.top = (event.clientY - rect.top) + 'px';
+                    link.appendChild(ripple);
+                    setTimeout(function () { ripple.remove(); }, 600);
+                }
                 );
-
             });
-
-
-            /* =====================================================
-                        GLOBAL LOADING
-            ====================================================== */
-
-            const globalLoading =
-                document.getElementById(
-                    'globalLoading'
-                );
-
-
-            const loadingText =
-                document.getElementById(
-                    'loadingText'
-                );
-
-
-            function showLoading(
-                message = 'Memproses...'
-            ) {
-
+            const globalLoading = document.getElementById('globalLoading');
+            const loadingText = document.getElementById('loadingText');
+            function showLoading(message = 'Memproses...') {
                 if (!globalLoading) {
                     return;
                 }
-
-
                 if (loadingText) {
-
-                    loadingText.textContent =
-                        message;
-
+                    loadingText.textContent = message;
                 }
-
-
-                globalLoading.classList.add(
-                    'show'
-                );
-
+                globalLoading.classList.add('show');
             }
-
-
             function hideLoading() {
-
                 if (!globalLoading) {
                     return;
                 }
-
-
-                globalLoading.classList.remove(
-                    'show'
-                );
-
+                globalLoading.classList.remove('show');
             }
-
-
-            /* =====================================================
-                        FORM LOADING
-            ====================================================== */
-
-            document
-                .querySelectorAll('form')
-                .forEach(function (form) {
-
-                    form.addEventListener(
-                        'submit',
-                        function (event) {
-
-                            /*
-                             * Logout mempunyai behavior
-                             * tersendiri.
-                             */
-
-                            if (
-                                form.id ===
-                                'logout-form'
-                            ) {
-
-                                return;
-
-                            }
-
-
-                            /*
-                             * Jika form dibatalkan
-                             * oleh script lain.
-                             */
-
-                            if (
-                                event.defaultPrevented
-                            ) {
-
-                                return;
-
-                            }
-
-
-                            showLoading(
-                                'Menyimpan data...'
-                            );
-
-                        }
+            document.querySelectorAll('form').forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.id === 'logout-form' || form.classList.contains('delete-form')) {
+                        return;
+                    }
+                    if (event.defaultPrevented) {
+                        return;
+                    }
+                    showLoading(
+                        'Menyimpan data...'
                     );
-
-                });
-
-
-            /* =====================================================
-                        LOGOUT LOADING
-            ====================================================== */
-
+                }
+                );
+            });
             document
                 .querySelectorAll('.logout-btn')
                 .forEach(function (link) {
-
                     link.addEventListener(
                         'click',
                         function () {
-
                             showLoading(
                                 'Keluar dari sistem...'
                             );
-
                         }
                     );
-
                 });
-
-
-            /* =====================================================
-                        INITIALIZE
-            ====================================================== */
-
             restoreSidebarState();
-
-            updateCollapseButton();
-
-
-            /* =====================================================
-                        PAGE LOAD
-            ====================================================== */
-
+            updateCollapseButton()
             window.addEventListener(
                 'load',
                 function () {
-
-                    setTimeout(
-                        function () {
-
-                            hideLoading();
-
-                        },
-                        250
-                    );
-
+                    setTimeout(function () {
+                        hideLoading();
+                    }, 250);
                 }
             );
-
         });
-
     </script>
-
-
-    <!-- =========================================================
-                            STACK SCRIPTS
-    ========================================================== -->
-
     @stack('scripts')
-
 </body>
 
 </html>

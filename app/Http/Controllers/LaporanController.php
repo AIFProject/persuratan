@@ -40,7 +40,7 @@ class LaporanController extends Controller {
         $suratKeluar = SuratKeluar::whereBetween('tanggal_surat', [$start, $end])
                     ->orderBy('tanggal_surat')
                     ->get();
-        $pdf = Pdf::loadView('Laporan.surat_keluar_pdf', compact('suratKeluar'  , 'start', 'end'));
+        $pdf = Pdf::loadView('laporan.surat_keluar_pdf', compact('suratKeluar'  , 'start', 'end'));
         return $pdf->download("Laporan-surat-keluar-{$start}-{$end}.pdf");
     }
 }

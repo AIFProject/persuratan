@@ -1558,7 +1558,7 @@
             }
             document.querySelectorAll('form').forEach(function (form) {
                 form.addEventListener('submit', function (event) {
-                    if (form.id === 'logout-form' || form.classList.contains('delete-form')) {
+                    if (form.id === 'logout-form' || form.classList.contains('delete-form') || form.target === '_blank') {
                         return;
                     }
                     if (event.defaultPrevented) {

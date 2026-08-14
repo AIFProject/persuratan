@@ -296,7 +296,7 @@ Tambahkan screenshot halaman aplikasi pada bagian ini, misalnya:
 Contoh:
 
 ```md
-![Dashboard](docs/screenshot/dashboard.png)
+![Dashboard](docs/screenshot/image.png)
 ```
 
 ---

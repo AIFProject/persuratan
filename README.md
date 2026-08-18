@@ -305,7 +305,7 @@ Aplikasi ini dikembangkan untuk membantu proses administrasi persuratan agar:
 
 ## 👨‍💻 Developer
 
-**AIFProject**
+Developed by **MH. Abyan Siddiqi**
 
 GitHub:
 https://github.com/AIFProject

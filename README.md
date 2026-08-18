@@ -264,20 +264,9 @@ Beberapa konfigurasi penting sebelum aplikasi digunakan pada environment product
 
 ## 📌 Status Project
 
-**Development / PKL Project**
+**Stable Release**
 
-Sistem saat ini telah memiliki fitur utama untuk pengelolaan:
-
-* Surat Masuk
-* Surat Keluar
-* Disposisi
-* Surat Keputusan
-* Arsip dokumen
-* Laporan PDF
-* Authentication
-* Integrasi Google Drive
-
-Project masih dalam tahap pengembangan dan penyempurnaan, khususnya pada aspek keamanan, authorization, testing, dan deployment production.
+Fitur utama sistem telah selesai dikembangkan dan dapat digunakan untuk pengelolaan administrasi persuratan meliputi Surat Masuk, Surat Keluar, Disposisi, Surat Keputusan, pengarsipan dokumen, dan pembuatan laporan PDF.
 
 ---
 
